@@ -37,7 +37,7 @@ kotlin {
     }
 
     val thirdPartyDir =
-        "${System.getProperty("user.home")}/.konan/third-party/kmath-gsl-${project.property("version")}"
+        File("${System.getProperty("user.home")}/.konan/third-party/kmath-gsl-${project.property("version")}")
 
     val main by nativeTarget.compilations.getting {
         cinterops {
@@ -84,7 +84,11 @@ kotlin {
 
     nativeTarget.binaries {
         all {
-            linkerOpts("-L${thirdPartyDir}/lib/")
+            linkerOpts(
+                "-L${File(thirdPartyDir, "lib").absolutePath}",
+                "-lgsl"
+            )
+
             optimized = true
             debuggable = false
         }
@@ -94,7 +98,8 @@ kotlin {
 readme {
     description = "Linear Algebra classes implemented with GNU Scientific Library"
     maturity = Maturity.PROTOTYPE
-    propertyByTemplate("artifact", rootProject.file("docs/templates/ARTIFACT-TEMPLATE.md"))
+    readmeTemplate = file("docs/templates/README-TEMPLATE.md")
+    propertyByTemplate("artifact", file("docs/templates/ARTIFACT-TEMPLATE.md"))
 
     feature(
         id = "matrix-contexts",
