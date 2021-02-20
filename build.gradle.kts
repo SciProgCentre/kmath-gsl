@@ -41,16 +41,7 @@ kotlin {
 
     val main by nativeTarget.compilations.getting {
         cinterops {
-            val libgsl by creating {
-                defFile.writeText("""
-                    package=org.gnu.gsl
-                    headers=gsl/gsl_blas.h gsl/gsl_linalg.h gsl/gsl_permute_matrix.h gsl/gsl_matrix.h gsl/gsl_vector.h gsl/gsl_errno.h
-                    staticLibraries=libgsl.a libgslcblas.a
-                    compilerOpts=-I${thirdPartyDir}/include/
-                    libraryPaths=${thirdPartyDir}/lib/
-
-                """.trimIndent())
-            }
+            val libgsl by creating
         }
     }
 
@@ -89,7 +80,24 @@ kotlin {
         commandLine("tar", "-xf", downloadGsl.dest)
     }
 
-    tasks[main.cinterops["libgsl"].interopProcessingTaskName].dependsOn(extractGsl)
+    val writeDefFile by tasks.creating {
+        val file = main.cinterops["libgsl"].defFile
+        file.parentFile.mkdirs()
+        file.createNewFile()
+
+        file.writeText("""
+                    package=org.gnu.gsl
+                    headers=gsl/gsl_blas.h gsl/gsl_linalg.h gsl/gsl_permute_matrix.h gsl/gsl_matrix.h gsl/gsl_vector.h gsl/gsl_errno.h
+                    staticLibraries=libgsl.a libgslcblas.a
+                    compilerOpts=-I${thirdPartyDir}/include/
+                    libraryPaths=${thirdPartyDir}/lib/
+
+                """.trimIndent())
+
+        dependsOn(extractGsl)
+    }
+
+    tasks[main.cinterops["libgsl"].interopProcessingTaskName].dependsOn(writeDefFile)
 
     nativeTarget.binaries {
         all {
