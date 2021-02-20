@@ -17,10 +17,6 @@ jobs:
           java-version: 11
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-      - name: Install libraries
-        run: |
-          sudo apt update
-          sudo apt install -y libncurses5
       - name: Install Chrome
         run: |
           sudo apt install -y libappindicator1 fonts-liberation
@@ -118,4 +114,3 @@ jobs:
         run: ./gradlew --build-cache build
       - name: Run release task
         run: ./gradlew release -PbintrayUser=${{ secrets.BINTRAY_USER }} -PbintrayApiKey=${{ secrets.BINTRAY_KEY }}
-
