@@ -71,8 +71,6 @@ fun vectorsCodegen(outputFile: String, project: Project = createProject()) {
         }
     }
 
-    PsiTestUtil.checkFileStructure(f)
-
     File(outputFile).apply {
         parentFile.mkdirs()
         writeText(f.text)
