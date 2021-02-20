@@ -82,7 +82,7 @@ kotlin {
         into(thirdPartyDir)
     }
 
-    tasks[nativeTarget.main.cinterops["libgsl"].interopProcessingTaskName].dependsOn(extractGsl)
+    tasks[main.cinterops["libgsl"].interopProcessingTaskName].dependsOn(extractGsl)
 
     nativeTarget.binaries {
         all {
