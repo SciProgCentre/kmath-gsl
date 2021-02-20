@@ -1,6 +1,5 @@
 package kscience.kmath.gsl
 
-import org.gnu.gsl.gsl_block_calloc
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 
