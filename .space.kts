@@ -1,3 +1,3 @@
 job("Build") {
-    gradlew("openjdk:11", "build")
+    gradlew("openjdk:11", "-Dorg.gradle.daemon=false", "build")
 }
