@@ -5,7 +5,7 @@ job("Build") {
 
             content = """
                 apt update
-                apt install libncurses5
+                apt install -y libncurses5
                 ./gradlew -Dorg.gradle.daemon=false build
             """.trimIndent()
         }
