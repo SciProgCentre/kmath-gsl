@@ -76,10 +76,10 @@ kotlin {
         overwrite(false)
     }
 
-    val extractGsl by tasks.creating(Copy::class) {
+    val extractGsl by tasks.creating(Exec::class) {
         dependsOn(downloadGsl)
-        from(tarTree(downloadGsl.dest))
-        into(thirdPartyDir)
+        workingDir(thirdPartyDir)
+        commandLine("tar", "-xf", downloadGsl.dest)
     }
 
     tasks[main.cinterops["libgsl"].interopProcessingTaskName].dependsOn(extractGsl)
