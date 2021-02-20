@@ -42,7 +42,14 @@ kotlin {
     val main by nativeTarget.compilations.getting {
         cinterops {
             val libgsl by creating {
-                compilerOpts += "-I${thirdPartyDir}/include/"
+                defFile.writeText("""
+                    package=org.gnu.gsl
+                    headers=gsl/gsl_blas.h gsl/gsl_linalg.h gsl/gsl_permute_matrix.h gsl/gsl_matrix.h gsl/gsl_vector.h gsl/gsl_errno.h
+                    staticLibraries=libgsl.a libgslcblas.a
+                    compilerOpts=-I${thirdPartyDir}/include/
+                    libraryPaths=${thirdPartyDir}/lib/
+
+                """.trimIndent())
             }
         }
     }
@@ -86,11 +93,6 @@ kotlin {
 
     nativeTarget.binaries {
         all {
-            linkerOpts(
-                "-L${File(thirdPartyDir, "lib").absolutePath}",
-                "-lgsl"
-            )
-
             optimized = true
             debuggable = false
         }

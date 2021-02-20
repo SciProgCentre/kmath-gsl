@@ -8,3 +8,5 @@ out/
 
 # Cache of project
 .gradletasknamecache
+src/nativeInterop/cinterop/libgsl.def
+
