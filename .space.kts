@@ -4,6 +4,7 @@ job("Build") {
             interpreter = "/bin/bash"
 
             content = """
+                apt update
                 apt install libncurses5
                 ./gradlew -Dorg.gradle.daemon=false build
             """.trimIndent()
