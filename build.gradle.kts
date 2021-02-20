@@ -82,6 +82,8 @@ kotlin {
         into(thirdPartyDir)
     }
 
+    tasks[nativeTarget.main.cinterops["libgsl"].interopProcessingTaskName].dependsOn(extractGsl)
+
     nativeTarget.binaries {
         all {
             linkerOpts(
