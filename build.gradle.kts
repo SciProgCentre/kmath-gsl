@@ -17,6 +17,8 @@ version = "0.2.0-dev-1"
 
 repositories {
     mavenCentral()
+    maven("https://dl.bintray.com/kotlin/dokka/")
+    maven("https://dl.bintray.com/jetbrains/markdown/")
 }
 
 kotlin {
