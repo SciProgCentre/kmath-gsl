@@ -1,4 +1,4 @@
-package kscience.kmath.gsl
+package space.kscience.kmath.gsl
 
 import kotlinx.cinterop.AutofreeScope
 import kotlinx.cinterop.CPointer

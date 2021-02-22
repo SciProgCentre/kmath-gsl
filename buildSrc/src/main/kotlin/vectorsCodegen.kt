@@ -1,4 +1,4 @@
-package kscience.kmath.gsl.codegen
+package space.kscience.kmath.gsl.codegen
 
 import org.intellij.lang.annotations.Language
 import org.jetbrains.kotlin.com.intellij.openapi.project.Project
@@ -54,7 +54,7 @@ private fun KtPsiFactory.createVectorClass(
 fun vectorsCodegen(outputFile: String, project: Project = createProject()) {
     val f = KtPsiFactory(project, true).run {
         createFile("").also { f ->
-            f += createPackageDirective(FqName("kscience.kmath.gsl"))
+            f += createPackageDirective(FqName("space.kscience.kmath.gsl"))
             f += createNewLine(2)
             f += createImportDirective(ImportPath.fromString("kotlinx.cinterop.*"))
             f += createNewLine(1)

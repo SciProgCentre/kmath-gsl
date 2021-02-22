@@ -1,10 +1,10 @@
-package kscience.kmath.gsl
+package space.kscience.kmath.gsl
 
 import kotlinx.cinterop.AutofreeScope
 import kotlinx.cinterop.CStructVar
-import kscience.kmath.linear.Matrix
-import kscience.kmath.nd.NDStructure
-import kscience.kmath.structures.asSequence
+import space.kscience.kmath.linear.Matrix
+import space.kscience.kmath.nd.NDStructure
+import space.kscience.kmath.structures.asSequence
 
 /**
  * Wraps gsl_matrix_* objects from GSL.

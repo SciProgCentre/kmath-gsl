@@ -1,9 +1,9 @@
-package kscience.kmath.gsl
+package space.kscience.kmath.gsl
 
 import kotlinx.cinterop.*
-import kscience.kmath.complex.Complex
-import kscience.kmath.structures.Buffer
-import kscience.kmath.structures.VirtualBuffer
+import space.kscience.kmath.complex.Complex
+import space.kscience.kmath.structures.Buffer
+import space.kscience.kmath.structures.VirtualBuffer
 import org.gnu.gsl.*
 
 internal fun CValue<gsl_complex>.toKMath(): Complex = useContents { Complex(dat[0], dat[1]) }

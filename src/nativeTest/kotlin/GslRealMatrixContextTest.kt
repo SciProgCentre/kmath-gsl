@@ -1,10 +1,10 @@
-package kscience.kmath.gsl
+package space.kscience.kmath.gsl
 
-import kscience.kmath.linear.Matrix
-import kscience.kmath.linear.RealMatrixContext
-import kscience.kmath.operations.invoke
-import kscience.kmath.structures.RealBuffer
-import kscience.kmath.structures.asSequence
+import space.kscience.kmath.linear.Matrix
+import space.kscience.kmath.linear.RealMatrixContext
+import space.kscience.kmath.operations.invoke
+import space.kscience.kmath.structures.RealBuffer
+import space.kscience.kmath.structures.asSequence
 import kotlin.random.Random
 import kotlin.test.Test
 import kotlin.test.assertEquals

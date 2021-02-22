@@ -1,22 +1,22 @@
 @file:Suppress("UNUSED_VARIABLE")
 
 import de.undercouch.gradle.tasks.download.Download
-import kscience.kmath.gsl.codegen.matricesCodegen
-import kscience.kmath.gsl.codegen.vectorsCodegen
+import space.kscience.kmath.gsl.codegen.matricesCodegen
+import space.kscience.kmath.gsl.codegen.vectorsCodegen
 import ru.mipt.npm.gradle.Maturity
 
 plugins {
-    id("ru.mipt.npm.mpp")
-    id("ru.mipt.npm.project")
-    id("ru.mipt.npm.publish")
+    id("ru.mipt.npm.gradle.project")
+    id("ru.mipt.npm.gradle.mpp")
+//    id("ru.mipt.npm.gradle.publish")
     id("de.undercouch.download")
 }
 
-group = "kscience.kmath"
-version = "0.2.0-dev-7"
+group = "space.kscience"
+version = "0.2.0-dev-1"
 
 repositories {
-    maven("https://maven.pkg.jetbrains.space/mipt-npm/p/sci/maven")
+    mavenCentral()
 }
 
 kotlin {
@@ -49,14 +49,14 @@ kotlin {
 
     val nativeMain by sourceSets.creating {
         val codegen by tasks.creating {
-            matricesCodegen(kotlin.srcDirs.first().absolutePath + "/kscience/kmath/gsl/_Matrices.kt")
-            vectorsCodegen(kotlin.srcDirs.first().absolutePath + "/kscience/kmath/gsl/_Vectors.kt")
+            matricesCodegen(kotlin.srcDirs.first().absolutePath + "/_Matrices.kt")
+            vectorsCodegen(kotlin.srcDirs.first().absolutePath + "/_Vectors.kt")
         }
 
         kotlin.srcDirs(files().builtBy(codegen))
 
         dependencies {
-            api("kscience.kmath:kmath-complex:0.2.0-dev-7")
+            api("space.kscience:kmath-complex:0.2.0")
         }
     }
 
@@ -116,10 +116,10 @@ readme {
     feature(
         id = "matrix-contexts",
         description = "Matrix Contexts over Double, Float and Complex implemented with GSL",
-        ref = "src/nativeMain/kotlin/kscience/kmath/gsl/GslMatrixContext.kt"
+        ref = "src/nativeMain/kotlin/GslMatrixContext.kt"
     )
 }
 
-ksciencePublish {
-    spaceRepo = "https://maven.pkg.jetbrains.space/mipt-npm/p/sci/maven"
-}
+//ksciencePublish {
+//    spaceRepo = "https://maven.pkg.jetbrains.space/mipt-npm/p/sci/maven"
+//}

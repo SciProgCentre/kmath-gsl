@@ -1,4 +1,4 @@
-package kscience.kmath.gsl.codegen
+package space.kscience.kmath.gsl.codegen
 
 import org.jetbrains.kotlin.cli.common.CLIConfigurationKeys
 import org.jetbrains.kotlin.cli.common.messages.MessageCollector

@@ -1,8 +1,8 @@
-package kscience.kmath.gsl
+package space.kscience.kmath.gsl
 
 import kotlinx.cinterop.AutofreeScope
 import kotlinx.cinterop.CStructVar
-import kscience.kmath.linear.Point
+import space.kscience.kmath.linear.Point
 
 /**
  * Wraps gsl_vector_* objects from GSL.

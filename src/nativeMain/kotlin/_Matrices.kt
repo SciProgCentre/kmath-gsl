@@ -1,7 +1,7 @@
-package kscience.kmath.gsl
+package space.kscience.kmath.gsl
 
 import kotlinx.cinterop.*
-import kscience.kmath.structures.*
+import space.kscience.kmath.structures.*
 import org.gnu.gsl.*
 
 internal class GslRealMatrix(

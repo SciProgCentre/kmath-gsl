@@ -1,4 +1,4 @@
-package kscience.kmath.gsl
+package space.kscience.kmath.gsl
 
 import kotlinx.cinterop.staticCFunction
 import kotlinx.cinterop.toKString
