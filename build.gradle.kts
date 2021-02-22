@@ -8,7 +8,7 @@ import ru.mipt.npm.gradle.Maturity
 plugins {
     id("ru.mipt.npm.gradle.project")
     id("ru.mipt.npm.gradle.mpp")
-//    id("ru.mipt.npm.gradle.publish")
+    id("ru.mipt.npm.gradle.publish")
     id("de.undercouch.download")
 }
 
@@ -120,6 +120,6 @@ readme {
     )
 }
 
-//ksciencePublish {
-//    spaceRepo = "https://maven.pkg.jetbrains.space/mipt-npm/p/sci/maven"
-//}
+ksciencePublish {
+    spaceRepo = "https://maven.pkg.jetbrains.space/mipt-npm/p/sci/maven"
+}
