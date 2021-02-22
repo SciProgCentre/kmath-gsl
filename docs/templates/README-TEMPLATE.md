@@ -1,6 +1,6 @@
 # GNU Scientific Library for KMath (`kmath-gsl`)
 
-This subproject implements the following features:
+This [KMath](https://github.com/mipt-npm/kmath) extension implements the following features:
 
 ${features}
 

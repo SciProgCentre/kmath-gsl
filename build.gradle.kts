@@ -115,7 +115,7 @@ readme {
 
     feature(
         id = "matrix-contexts",
-        description = "Matrix Contexts over Double, Float and Complex implemented with GSL",
+        description = "Matrix Contexts over Double, Float, and Complex implemented with GSL",
         ref = "src/nativeMain/kotlin/GslMatrixContext.kt"
     )
 }
