@@ -1,5 +1,5 @@
 job("Build") {
-    container("openjdk:11.0.10-jdk-buster") {
+    container("mipt-npm.registry.jetbrains.space/p/sci/containers/ci-environment:1.0.0") {
         shellScript {
             interpreter = "/bin/bash"
 
