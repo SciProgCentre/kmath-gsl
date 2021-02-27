@@ -13,8 +13,7 @@ This [KMath](https://github.com/mipt-npm/kmath) extension implements the followi
 >
 > ```gradle
 > repositories {
->     maven { url 'https://dl.bintray.com/hotkeytlt/maven' }
->     maven { url 'https://maven.pkg.jetbrains.space/mipt-npm/p/sci/maven' }
+>     maven { url 'https://repo.kotlin.link' }
 > }
 > 
 > dependencies {
@@ -25,7 +24,7 @@ This [KMath](https://github.com/mipt-npm/kmath) extension implements the followi
 >
 > ```kotlin
 > repositories {
->     maven("https://dl.bintray.com/hotkeytlt/maven")
+>     maven("https://repo.kotlin.link")
 >     maven("https://maven.pkg.jetbrains.space/mipt-npm/p/sci/maven")
 > }
 > 
@@ -33,3 +32,4 @@ This [KMath](https://github.com/mipt-npm/kmath) extension implements the followi
 >     implementation("space.kscience:kmath-gsl:0.2.0-dev-1")
 > }
 > ```
+
