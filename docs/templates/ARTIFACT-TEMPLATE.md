@@ -6,8 +6,7 @@
 >
 > ```gradle
 > repositories {
->     maven { url 'https://dl.bintray.com/hotkeytlt/maven' }
->     maven { url 'https://maven.pkg.jetbrains.space/mipt-npm/p/sci/maven' }
+>     maven { url 'https://repo.kotlin.link' }
 > }
 > 
 > dependencies {
@@ -18,7 +17,7 @@
 >
 > ```kotlin
 > repositories {
->     maven("https://dl.bintray.com/hotkeytlt/maven")
+>     maven("https://repo.kotlin.link")
 >     maven("https://maven.pkg.jetbrains.space/mipt-npm/p/sci/maven")
 > }
 > 

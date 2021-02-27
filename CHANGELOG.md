@@ -1,6 +1,6 @@
 # GNU Scientific Library for KMath
 
-## [Unreleased]
+## [0.2.0-dev-1]
 ### Added
 
 ### Changed
