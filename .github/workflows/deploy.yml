@@ -28,6 +28,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
       - name: Publish Ubuntu Artifacts
-        run: ./gradlew publishAllPublicationsToSpaceRepository publishAllPublicationsToSonatypeRepository --no-daemon --stacktrace -PsonatypePublish=true -PsonatypeUser=${{ secrets.SONATYPE_USERNAME }} -PsonatypePassword=${{ secrets.SONATYPE_PASSWORD }} -PspaceUser=${{ secrets.SPACE_USERNAME }} -PspacePassword=${{ secrets.SPACE_PASSWORD }}
+        run: ./gradlew publishAllPublicationsToSpaceRepository publishAllPublicationsToSonatypeRepository --no-daemon --stacktrace -PsonatypePublish=true -PsonatypeUser=${{ secrets.SONATYPE_USERNAME }} -PsonatypePassword=${{ secrets.SONATYPE_PASSWORD }} -PspaceUser=${{ secrets.SPACE_USERNAME }} -PspaceToken=${{ secrets.SPACE_PASSWORD }}
         env:
           signingKey: ${{ secrets.SIGNING_KEY }}
