@@ -123,5 +123,5 @@ readme {
 }
 
 ksciencePublish {
-    spaceRepo = "https://maven.pkg.jetbrains.space/mipt-npm/p/sci/maven"
+    spaceRepo = "https://mipt-npm.jetbrains.space/p/sci/packages/maven/test"
 }
