@@ -7,7 +7,7 @@ This [KMath](https://github.com/mipt-npm/kmath) extension implements the followi
 
 > #### Artifact:
 >
-> This module artifact: `space.kscience:kmath-gsl:0.2.0-dev-1`.
+> This module artifact: `space.kscience:kmath-gsl:0.2.1-dev-1`.
 >
 > **Gradle:**
 >
@@ -17,7 +17,7 @@ This [KMath](https://github.com/mipt-npm/kmath) extension implements the followi
 > }
 > 
 > dependencies {
->     implementation 'space.kscience:kmath-gsl:0.2.0-dev-1'
+>     implementation 'space.kscience:kmath-gsl:0.2.1-dev-1'
 > }
 > ```
 > **Gradle Kotlin DSL:**
@@ -29,7 +29,7 @@ This [KMath](https://github.com/mipt-npm/kmath) extension implements the followi
 > }
 > 
 > dependencies {
->     implementation("space.kscience:kmath-gsl:0.2.0-dev-1")
+>     implementation("space.kscience:kmath-gsl:0.2.1-dev-1")
 > }
 > ```
 
