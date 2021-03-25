@@ -1,35 +1,39 @@
-# GNU Scientific Library for KMath (`kmath-gsl`)
+# Module kmath-gsl
 
-This [KMath](https://github.com/mipt-npm/kmath) extension implements the following features:
+[KMath](https://github.com/mipt-npm/kmath) extension adding GNU Scientific Library based linear algebra implementation.
+
+[![JetBrains Research](https://jb.gg/badges/research.svg)](https://confluence.jetbrains.com/display/ALL/JetBrains+on+GitHub)
+[![Gradle build](https://github.com/mipt-npm/kmath-gsl/workflows/build/badge.svg)](https://github.com/mipt-npm/kmath-gsl/actions/workflows/build.yml)
+[![Space](https://img.shields.io/maven-metadata/v?label=Space&metadataUrl=https://maven.pkg.jetbrains.space/mipt-npm/p/sci/maven/space/kscience/kmath-gsl/maven-metadata.xml)](https://maven.pkg.jetbrains.space/mipt-npm/p/sci/maven/space/kscience/kmath-gsl/0.2.1-dev-1/)
 
  - [matrix-contexts](src/nativeMain/kotlin/GslMatrixContext.kt) : Matrix Contexts over Double, Float, and Complex implemented with GSL
 
 
-> #### Artifact:
->
-> This module artifact: `space.kscience:kmath-gsl:0.2.1-dev-1`.
->
-> **Gradle:**
->
-> ```gradle
-> repositories {
->     maven { url 'https://repo.kotlin.link' }
-> }
-> 
-> dependencies {
->     implementation 'space.kscience:kmath-gsl:0.2.1-dev-1'
-> }
-> ```
-> **Gradle Kotlin DSL:**
->
-> ```kotlin
-> repositories {
->     maven("https://repo.kotlin.link")
->     maven("https://maven.pkg.jetbrains.space/mipt-npm/p/sci/maven")
-> }
-> 
-> dependencies {
->     implementation("space.kscience:kmath-gsl:0.2.1-dev-1")
-> }
-> ```
+## Artifact:
 
+The Maven coordinates of this project are `space.kscience:kmath-gsl:0.2.1-dev-1`.
+
+**Gradle:**
+```gradle
+repositories {
+    maven { url 'https://repo.kotlin.link' }
+    maven { url 'https://dl.bintray.com/hotkeytlt/maven' }
+    maven { url "https://dl.bintray.com/kotlin/kotlin-eap" } // include for builds based on kotlin-eap
+}
+
+dependencies {
+    implementation 'space.kscience:kmath-gsl:0.2.1-dev-1'
+}
+```
+**Gradle Kotlin DSL:**
+```kotlin
+repositories {
+    maven("https://repo.kotlin.link")
+    maven("https://dl.bintray.com/kotlin/kotlin-eap") // include for builds based on kotlin-eap
+    maven("https://dl.bintray.com/hotkeytlt/maven") // required for a
+}
+
+dependencies {
+    implementation("space.kscience:kmath-gsl:0.2.1-dev-1")
+}
+```
