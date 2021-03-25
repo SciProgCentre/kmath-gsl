@@ -123,5 +123,10 @@ readme {
 }
 
 ksciencePublish {
-    spaceRepo = "https://maven.pkg.jetbrains.space/mipt-npm/p/sci/maven"
+    github("kmath-gsl")
+    space()
+}
+
+apiValidation {
+    nonPublicMarkers.add("space.kscience.kmath.misc.UnstableKMathAPI")
 }
