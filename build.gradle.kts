@@ -6,9 +6,9 @@ import space.kscience.kmath.gsl.codegen.vectorsCodegen
 import ru.mipt.npm.gradle.Maturity
 
 plugins {
+    kotlin("multiplatform")
     id("ru.mipt.npm.gradle.project")
-    id("ru.mipt.npm.gradle.mpp")
-    id("ru.mipt.npm.gradle.publish")
+    id("ru.mipt.npm.gradle.common")
     id("de.undercouch.download")
 }
 

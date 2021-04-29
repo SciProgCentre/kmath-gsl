@@ -15,7 +15,9 @@ public abstract class GslMatrix<T : Any, H : CStructVar> internal constructor(sc
     internal abstract fun copy(): GslMatrix<T, H>
 
     public override fun equals(other: Any?): Boolean {
-        return NDStructure.contentEquals(this, other as? NDStructure<*> ?: return false)
+        if (this === other) return true
+        if (other is NDStructure<*>) return NDStructure.contentEquals(this, other)
+        return false
     }
 
     public override fun hashCode(): Int {

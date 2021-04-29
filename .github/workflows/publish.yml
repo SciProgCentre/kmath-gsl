@@ -1,11 +1,16 @@
-# Based on https://github.com/touchlab/Stately/blob/main/.github/workflows/deploy.yml
+name: Gradle publish
 
-name: deploy
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+  release:
+    types:
+      - created
 
 jobs:
-  build:
-    runs-on: ubuntu-20.04
+  publish:
+    environment:
+      name: publish
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout the repo
         uses: actions/checkout@v2
@@ -28,6 +33,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
       - name: Publish Ubuntu Artifacts
-        run: ./gradlew publishAllPublicationsToSpaceRepository publishAllPublicationsToSonatypeRepository --no-daemon --stacktrace -PsonatypePublish=true -PsonatypeUser=${{ secrets.SONATYPE_USERNAME }} -PsonatypePassword=${{ secrets.SONATYPE_PASSWORD }} -PspaceUser=${{ secrets.SPACE_USERNAME }} -PspacePassword=${{ secrets.SPACE_PASSWORD }}
-        env:
-          signingKey: ${{ secrets.SIGNING_KEY }}
+        run: >
+          ./gradlew release --no-daemon
+          -Ppublishing.enabled=true
+          -Ppublishing.platform=linuxX64
+          -Ppublishing.github.user=${{ secrets.PUBLISHING_GITHUB_USER }}
+          -Ppublishing.github.token=${{ secrets.PUBLISHING_GITHUB_TOKEN }}
+          -Ppublishing.space.user=${{ secrets.PUBLISHING_SPACE_USER }}
+          -Ppublishing.space.token=${{ secrets.PUBLISHING_SPACE_TOKEN }}
