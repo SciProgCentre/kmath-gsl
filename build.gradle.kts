@@ -1,9 +1,10 @@
 @file:Suppress("UNUSED_VARIABLE")
 
 import de.undercouch.gradle.tasks.download.Download
+import org.jetbrains.dokka.gradle.DokkaTask
+import ru.mipt.npm.gradle.Maturity
 import space.kscience.kmath.gsl.codegen.matricesCodegen
 import space.kscience.kmath.gsl.codegen.vectorsCodegen
-import ru.mipt.npm.gradle.Maturity
 
 plugins {
     kotlin("multiplatform")
@@ -125,4 +126,18 @@ ksciencePublish {
 
 apiValidation {
     nonPublicMarkers.add("space.kscience.kmath.misc.UnstableKMathAPI")
+}
+
+afterEvaluate {
+    tasks.withType<DokkaTask> {
+        dokkaSourceSets.all {
+            val readmeFile = File(projectDir, "./README.md")
+            if (readmeFile.exists())
+                includes.setFrom(includes + readmeFile.absolutePath)
+
+            externalDocumentationLink("https://mipt-npm.github.io/kmath/kmath-core/kmath-core/")
+            externalDocumentationLink("https://mipt-npm.github.io/kmath/kmath-memory/kmath-memory/")
+            externalDocumentationLink("https://mipt-npm.github.io/kmath/kmath-complex/kmath-complex/")
+        }
+    }
 }
