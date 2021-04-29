@@ -16,11 +16,9 @@ jobs:
         with:
           java-version: 11
       - name: Build
-        run: |
-          ./gradlew dokkaHtmlMultiModule --no-daemon --no-parallel --stacktrace
-          mv build/dokka/htmlMultiModule/-modules.html build/dokka/htmlMultiModule/index.html
+        run: ./gradlew dokkaHtml --no-daemon --no-parallel --stacktrace
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.0
         with:
           branch: gh-pages
-          folder: build/dokka/htmlMultiModule
+          folder: build/dokka/html

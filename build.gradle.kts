@@ -15,11 +15,7 @@ plugins {
 group = "space.kscience"
 version = "0.2.1-dev-1"
 
-repositories {
-    mavenCentral()
-    maven("https://dl.bintray.com/kotlin/dokka/")
-    maven("https://dl.bintray.com/jetbrains/markdown/")
-}
+repositories.mavenCentral()
 
 kotlin {
     explicitApiWarning()
