@@ -1,10 +1,10 @@
 package space.kscience.kmath.gsl
 
 import kotlinx.cinterop.*
-import space.kscience.kmath.complex.Complex
-import space.kscience.kmath.structures.Buffer
-import space.kscience.kmath.structures.VirtualBuffer
 import org.gnu.gsl.*
+import space.kscience.kmath.complex.Complex
+import space.kscience.kmath.misc.PerformancePitfall
+import space.kscience.kmath.structures.Buffer
 
 internal fun CValue<gsl_complex>.toKMath(): Complex = useContents { Complex(dat[0], dat[1]) }
 
@@ -21,8 +21,9 @@ internal class GslComplexMatrix(
     override val rowNum: Int get() = nativeHandle.pointed.size1.toInt()
     override val colNum: Int get() = nativeHandle.pointed.size2.toInt()
 
-    override val rows: Buffer<Buffer<Complex>>
-        get() = VirtualBuffer(rowNum) { r ->
+    @PerformancePitfall
+    override val rows: List<Buffer<Complex>>
+        get() = List(rowNum) { r ->
             GslComplexVector(
                 gsl_matrix_complex_row(nativeHandle, r.toULong()).placeTo(scope).pointed.vector.ptr,
                 scope,
@@ -30,8 +31,9 @@ internal class GslComplexMatrix(
             )
         }
 
-    override val columns: Buffer<Buffer<Complex>>
-        get() = VirtualBuffer(rowNum) { c ->
+    @PerformancePitfall
+    override val columns: List<Buffer<Complex>>
+        get() = List(rowNum) { c ->
             GslComplexVector(
                 gsl_matrix_complex_column(nativeHandle, c.toULong()).placeTo(scope).pointed.vector.ptr,
                 scope,
@@ -52,13 +54,6 @@ internal class GslComplexMatrix(
     }
 
     override fun close(): Unit = gsl_matrix_complex_free(nativeHandle)
-
-    override fun equals(other: Any?): Boolean {
-        if (other is GslComplexMatrix)
-            return gsl_matrix_complex_equal(nativeHandle, other.nativeHandle) == 1
-
-        return super.equals(other)
-    }
 }
 
 internal class GslComplexVector(
@@ -76,13 +71,6 @@ internal class GslComplexVector(
         val new = checkNotNull(gsl_vector_complex_alloc(size.toULong()))
         gsl_vector_complex_memcpy(new, nativeHandle)
         return GslComplexVector(new, scope, true)
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (other is GslComplexVector)
-            return gsl_vector_complex_equal(nativeHandle, other.nativeHandle) == 1
-
-        return super.equals(other)
     }
 
     override fun close(): Unit = gsl_vector_complex_free(nativeHandle)

@@ -14,7 +14,7 @@ plugins {
 }
 
 group = "space.kscience"
-version = "0.2.1-dev-1"
+version = "0.3.0-dev-1"
 
 repositories.mavenCentral()
 
@@ -23,10 +23,8 @@ kotlin {
     data class DownloadLinks(val gsl: String)
 
     val (nativeTarget, downloadLinks) = when (System.getProperty("os.name")) {
-//        "Mac OS X" -> macosX64()
-
         "Linux" -> linuxX64() to DownloadLinks(
-            gsl = "https://anaconda.org/conda-forge/gsl/2.6/download/linux-64/gsl-2.6-he838d99_2.tar.bz2"
+            gsl = "https://anaconda.org/conda-forge/gsl/2.6/download/linux-64/gsl-2.6-he838d99_2.tar.bz2",
         )
 
         else -> {
@@ -38,13 +36,11 @@ kotlin {
     val thirdPartyDir =
         File("${System.getProperty("user.home")}/.konan/third-party/kmath-gsl-${project.property("version")}")
 
-    val main by nativeTarget.compilations.getting {
-        cinterops {
-            val libgsl by creating
-        }
-    }
 
+    val main by nativeTarget.compilations.getting
     val test by nativeTarget.compilations.getting
+
+    val libgsl by main.cinterops.creating
 
     val nativeMain by sourceSets.creating {
         val codegen by tasks.creating {
@@ -55,7 +51,7 @@ kotlin {
         kotlin.srcDirs(files().builtBy(codegen))
 
         dependencies {
-            api("space.kscience:kmath-complex:0.2.1")
+            api("space.kscience:kmath-complex:0.3.0-dev-12")
         }
     }
 
@@ -67,8 +63,7 @@ kotlin {
     test.defaultSourceSet.dependsOn(nativeTest)
 
     val downloadGsl by tasks.creating(Download::class) {
-        val url = downloadLinks.gsl
-        src(url)
+        src(downloadLinks.gsl)
         dest(File(thirdPartyDir, "libgsl.tar.bz2"))
         overwrite(false)
     }
@@ -80,13 +75,14 @@ kotlin {
     }
 
     val writeDefFile by tasks.creating {
-        val file = main.cinterops["libgsl"].defFile
+        val file = libgsl.defFile
         file.parentFile.mkdirs()
-        file.createNewFile()
+        if (!file.exists()) file.createNewFile()
 
         file.writeText("""
                     package=org.gnu.gsl
                     headers=gsl/gsl_blas.h gsl/gsl_linalg.h gsl/gsl_permute_matrix.h gsl/gsl_matrix.h gsl/gsl_vector.h gsl/gsl_errno.h
+                    linkerOpts = -L/usr/lib64 -L/usr/lib/x86_64-linux-gnu -lblas
                     staticLibraries=libgsl.a libgslcblas.a
                     compilerOpts=-I${thirdPartyDir}/include/
                     libraryPaths=${thirdPartyDir}/lib/
@@ -114,8 +110,9 @@ readme {
 
     feature(
         id = "matrix-contexts",
-        description = "Matrix Contexts over Double, Float, and Complex implemented with GSL",
-        ref = "src/nativeMain/kotlin/GslMatrixContext.kt"
+        description =
+        "LinearSpace implementations for Double, Float, and Complex matrices and vectors implemented with GSL",
+        ref = "src/nativeMain/kotlin/GslLinearSpace.kt"
     )
 }
 

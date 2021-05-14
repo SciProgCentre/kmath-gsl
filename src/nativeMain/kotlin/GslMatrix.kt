@@ -3,7 +3,7 @@ package space.kscience.kmath.gsl
 import kotlinx.cinterop.AutofreeScope
 import kotlinx.cinterop.CStructVar
 import space.kscience.kmath.linear.Matrix
-import space.kscience.kmath.nd.NDStructure
+import space.kscience.kmath.misc.PerformancePitfall
 import space.kscience.kmath.structures.asSequence
 
 /**
@@ -14,27 +14,10 @@ public abstract class GslMatrix<T : Any, H : CStructVar> internal constructor(sc
     internal abstract operator fun set(i: Int, j: Int, value: T)
     internal abstract fun copy(): GslMatrix<T, H>
 
-    public override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other is NDStructure<*>) return NDStructure.contentEquals(this, other)
-        return false
-    }
-
-    public override fun hashCode(): Int {
-        var ret = 7
-        ret = ret * 31 + rowNum
-        ret = ret * 31 + colNum
-
-        for (row in 0 until rowNum)
-            for (col in 0 until colNum)
-                ret = ret * 31 + (11 * (row + 1) + 17 * (col + 1)) * this[row, col].hashCode()
-
-        return ret
-    }
-
+    @OptIn(PerformancePitfall::class)
     public override fun toString(): String = if (rowNum <= 5 && colNum <= 5)
         "Matrix(rowsNum = $rowNum, colNum = $colNum)\n" +
-                rows.asSequence().joinToString(prefix = "(", postfix = ")", separator = "\n ") { buffer ->
+                rows.joinToString(prefix = "(", postfix = ")", separator = "\n ") { buffer ->
                     buffer.asSequence().joinToString(separator = "\t") { it.toString() }
                 }
     else

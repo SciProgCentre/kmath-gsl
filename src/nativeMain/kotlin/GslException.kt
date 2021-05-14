@@ -10,7 +10,7 @@ private object Container {
     val isKmathHandlerRegistered = AtomicInt(0)
 }
 
-internal enum class GslErrnoValue(val code: Int, val text: String) {
+internal enum class GslErrnoValue(val code: Int, private val text: String) {
     GSL_SUCCESS(org.gnu.gsl.GSL_SUCCESS, ""),
     GSL_FAILURE(org.gnu.gsl.GSL_FAILURE, ""),
     GSL_CONTINUE(org.gnu.gsl.GSL_CONTINUE, "iteration has not converged"),
@@ -58,8 +58,7 @@ internal enum class GslErrnoValue(val code: Int, val text: String) {
  * Wraps all the errors reported by GSL.
  */
 public class GslException internal constructor(file: String, line: Int, reason: String, errno: Int) :
-    RuntimeException("$file:$line: $reason. errno - $errno, ${GslErrnoValue.valueOf(errno)}") {
-}
+    RuntimeException("$file:$line: $reason. errno - $errno, ${GslErrnoValue.valueOf(errno)}")
 
 internal fun ensureHasGslErrorHandler() {
     if (Container.isKmathHandlerRegistered.value == 1) return

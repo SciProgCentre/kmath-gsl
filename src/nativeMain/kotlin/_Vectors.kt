@@ -3,7 +3,7 @@ package space.kscience.kmath.gsl
 import kotlinx.cinterop.*
 import org.gnu.gsl.*
 
-internal class GslRealVector(
+internal class GslDoubleVector(
     override val rawNativeHandle: CPointer<gsl_vector>, 
     scope: AutofreeScope, 
     owned: Boolean,
@@ -12,17 +12,10 @@ internal class GslRealVector(
     override operator fun get(index: Int): Double = gsl_vector_get(nativeHandle, index.toULong())
     override operator fun set(index: Int, value: Double): Unit = gsl_vector_set(nativeHandle, index.toULong(), value)
 
-    override fun copy(): GslRealVector {
+    override fun copy(): GslDoubleVector {
         val new = checkNotNull(gsl_vector_alloc(size.toULong()))
         gsl_vector_memcpy(new, nativeHandle)
-        return GslRealVector(new, scope, true)
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (other is GslRealVector)
-            return gsl_vector_equal(nativeHandle, other.nativeHandle) == 1
-
-        return super.equals(other)
+        return GslDoubleVector(new, scope, true)
     }
 
     override fun close(): Unit = gsl_vector_free(nativeHandle)
@@ -43,13 +36,6 @@ internal class GslFloatVector(
         return GslFloatVector(new, scope, true)
     }
 
-    override fun equals(other: Any?): Boolean {
-        if (other is GslFloatVector)
-            return gsl_vector_float_equal(nativeHandle, other.nativeHandle) == 1
-
-        return super.equals(other)
-    }
-
     override fun close(): Unit = gsl_vector_float_free(nativeHandle)
 }
 
@@ -66,13 +52,6 @@ internal class GslShortVector(
         val new = checkNotNull(gsl_vector_short_alloc(size.toULong()))
         gsl_vector_short_memcpy(new, nativeHandle)
         return GslShortVector(new, scope, true)
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (other is GslShortVector)
-            return gsl_vector_short_equal(nativeHandle, other.nativeHandle) == 1
-
-        return super.equals(other)
     }
 
     override fun close(): Unit = gsl_vector_short_free(nativeHandle)
@@ -93,13 +72,6 @@ internal class GslUShortVector(
         return GslUShortVector(new, scope, true)
     }
 
-    override fun equals(other: Any?): Boolean {
-        if (other is GslUShortVector)
-            return gsl_vector_ushort_equal(nativeHandle, other.nativeHandle) == 1
-
-        return super.equals(other)
-    }
-
     override fun close(): Unit = gsl_vector_ushort_free(nativeHandle)
 }
 
@@ -116,13 +88,6 @@ internal class GslLongVector(
         val new = checkNotNull(gsl_vector_long_alloc(size.toULong()))
         gsl_vector_long_memcpy(new, nativeHandle)
         return GslLongVector(new, scope, true)
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (other is GslLongVector)
-            return gsl_vector_long_equal(nativeHandle, other.nativeHandle) == 1
-
-        return super.equals(other)
     }
 
     override fun close(): Unit = gsl_vector_long_free(nativeHandle)
@@ -143,13 +108,6 @@ internal class GslULongVector(
         return GslULongVector(new, scope, true)
     }
 
-    override fun equals(other: Any?): Boolean {
-        if (other is GslULongVector)
-            return gsl_vector_ulong_equal(nativeHandle, other.nativeHandle) == 1
-
-        return super.equals(other)
-    }
-
     override fun close(): Unit = gsl_vector_ulong_free(nativeHandle)
 }
 
@@ -168,13 +126,6 @@ internal class GslIntVector(
         return GslIntVector(new, scope, true)
     }
 
-    override fun equals(other: Any?): Boolean {
-        if (other is GslIntVector)
-            return gsl_vector_int_equal(nativeHandle, other.nativeHandle) == 1
-
-        return super.equals(other)
-    }
-
     override fun close(): Unit = gsl_vector_int_free(nativeHandle)
 }
 
@@ -191,13 +142,6 @@ internal class GslUIntVector(
         val new = checkNotNull(gsl_vector_uint_alloc(size.toULong()))
         gsl_vector_uint_memcpy(new, nativeHandle)
         return GslUIntVector(new, scope, true)
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (other is GslUIntVector)
-            return gsl_vector_uint_equal(nativeHandle, other.nativeHandle) == 1
-
-        return super.equals(other)
     }
 
     override fun close(): Unit = gsl_vector_uint_free(nativeHandle)

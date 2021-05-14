@@ -7,17 +7,20 @@ internal class ErrorsHandlingTest {
     @Test
     fun matrixAllocation() {
         assertFailsWith<GslException> {
-            GslRealMatrixContext { produce(Int.MAX_VALUE, Int.MAX_VALUE) { _, _ -> 0.0 } }
+            GslDoubleLinearSpace {
+                buildMatrix(Int.MAX_VALUE, Int.MAX_VALUE) { _, _ -> 0.0 }
+            }
         }
     }
 
     @Test
     fun useOfClosedObject() {
-        val mat = GslRealMatrixContext { produce(1, 1) { _, _ -> 0.0 } }
+        val mat = GslDoubleLinearSpace {
+            buildMatrix(1, 1) { _, _ -> 0.0 }
+        }
+
         assertFailsWith<IllegalStateException> { mat.colNum }
         assertFailsWith<IllegalStateException> { mat.rowNum }
         assertFailsWith<IllegalStateException> { mat[0, 0] }
-        assertFailsWith<IllegalStateException> { mat.copy() }
-        assertFailsWith<IllegalStateException> { println(mat == mat) }
     }
 }

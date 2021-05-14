@@ -1,10 +1,11 @@
 package space.kscience.kmath.gsl
 
 import kotlinx.cinterop.*
-import space.kscience.kmath.structures.*
 import org.gnu.gsl.*
+import space.kscience.kmath.misc.PerformancePitfall
+import space.kscience.kmath.structures.*
 
-internal class GslRealMatrix(
+internal class GslDoubleMatrix(
     override val rawNativeHandle: CPointer<gsl_matrix>,
     scope: AutofreeScope,
     owned: Boolean,
@@ -15,18 +16,20 @@ internal class GslRealMatrix(
     override val colNum: Int
         get() = nativeHandle.pointed.size2.toInt()
 
-    override val rows: Buffer<Buffer<Double>>
-        get() = VirtualBuffer(rowNum) { r ->
-            GslRealVector(
+    @PerformancePitfall
+    override val rows: List<Buffer<Double>>
+        get() = List(rowNum) { r ->
+            GslDoubleVector(
                 gsl_matrix_row(nativeHandle, r.toULong()).placeTo(scope).pointed.vector.ptr,
                 scope,
                 false,
             )
         }
 
-    override val columns: Buffer<Buffer<Double>>
-        get() = VirtualBuffer(rowNum) { c ->
-            GslRealVector(
+    @PerformancePitfall
+    override val columns: List<Buffer<Double>>
+        get() = List(rowNum) { c ->
+            GslDoubleVector(
                 gsl_matrix_column(nativeHandle, c.toULong()).placeTo(scope).pointed.vector.ptr,
                 scope,
                 false,
@@ -39,20 +42,13 @@ internal class GslRealMatrix(
     override operator fun set(i: Int, j: Int, value: Double): Unit =
         gsl_matrix_set(nativeHandle, i.toULong(), j.toULong(), value)
 
-    override fun copy(): GslRealMatrix {
+    override fun copy(): GslDoubleMatrix {
         val new = checkNotNull(gsl_matrix_alloc(rowNum.toULong(), colNum.toULong()))
         gsl_matrix_memcpy(new, nativeHandle)
-        return GslRealMatrix(new, scope, true)
+        return GslDoubleMatrix(new, scope, true)
     }
 
     override fun close(): Unit = gsl_matrix_free(nativeHandle)
-
-    override fun equals(other: Any?): Boolean {
-        if (other is GslRealMatrix)
-            return gsl_matrix_equal(nativeHandle, other.nativeHandle) == 1
-
-        return super.equals(other)
-    }
 }
 
 internal class GslFloatMatrix(
@@ -66,8 +62,9 @@ internal class GslFloatMatrix(
     override val colNum: Int
         get() = nativeHandle.pointed.size2.toInt()
 
-    override val rows: Buffer<Buffer<Float>>
-        get() = VirtualBuffer(rowNum) { r ->
+    @PerformancePitfall
+    override val rows: List<Buffer<Float>>
+        get() = List(rowNum) { r ->
             GslFloatVector(
                 gsl_matrix_float_row(nativeHandle, r.toULong()).placeTo(scope).pointed.vector.ptr,
                 scope,
@@ -75,8 +72,9 @@ internal class GslFloatMatrix(
             )
         }
 
-    override val columns: Buffer<Buffer<Float>>
-        get() = VirtualBuffer(rowNum) { c ->
+    @PerformancePitfall
+    override val columns: List<Buffer<Float>>
+        get() = List(rowNum) { c ->
             GslFloatVector(
                 gsl_matrix_float_column(nativeHandle, c.toULong()).placeTo(scope).pointed.vector.ptr,
                 scope,
@@ -97,13 +95,6 @@ internal class GslFloatMatrix(
     }
 
     override fun close(): Unit = gsl_matrix_float_free(nativeHandle)
-
-    override fun equals(other: Any?): Boolean {
-        if (other is GslFloatMatrix)
-            return gsl_matrix_float_equal(nativeHandle, other.nativeHandle) == 1
-
-        return super.equals(other)
-    }
 }
 
 internal class GslShortMatrix(
@@ -117,8 +108,9 @@ internal class GslShortMatrix(
     override val colNum: Int
         get() = nativeHandle.pointed.size2.toInt()
 
-    override val rows: Buffer<Buffer<Short>>
-        get() = VirtualBuffer(rowNum) { r ->
+    @PerformancePitfall
+    override val rows: List<Buffer<Short>>
+        get() = List(rowNum) { r ->
             GslShortVector(
                 gsl_matrix_short_row(nativeHandle, r.toULong()).placeTo(scope).pointed.vector.ptr,
                 scope,
@@ -126,8 +118,9 @@ internal class GslShortMatrix(
             )
         }
 
-    override val columns: Buffer<Buffer<Short>>
-        get() = VirtualBuffer(rowNum) { c ->
+    @PerformancePitfall
+    override val columns: List<Buffer<Short>>
+        get() = List(rowNum) { c ->
             GslShortVector(
                 gsl_matrix_short_column(nativeHandle, c.toULong()).placeTo(scope).pointed.vector.ptr,
                 scope,
@@ -148,13 +141,6 @@ internal class GslShortMatrix(
     }
 
     override fun close(): Unit = gsl_matrix_short_free(nativeHandle)
-
-    override fun equals(other: Any?): Boolean {
-        if (other is GslShortMatrix)
-            return gsl_matrix_short_equal(nativeHandle, other.nativeHandle) == 1
-
-        return super.equals(other)
-    }
 }
 
 internal class GslUShortMatrix(
@@ -168,8 +154,9 @@ internal class GslUShortMatrix(
     override val colNum: Int
         get() = nativeHandle.pointed.size2.toInt()
 
-    override val rows: Buffer<Buffer<UShort>>
-        get() = VirtualBuffer(rowNum) { r ->
+    @PerformancePitfall
+    override val rows: List<Buffer<UShort>>
+        get() = List(rowNum) { r ->
             GslUShortVector(
                 gsl_matrix_ushort_row(nativeHandle, r.toULong()).placeTo(scope).pointed.vector.ptr,
                 scope,
@@ -177,8 +164,9 @@ internal class GslUShortMatrix(
             )
         }
 
-    override val columns: Buffer<Buffer<UShort>>
-        get() = VirtualBuffer(rowNum) { c ->
+    @PerformancePitfall
+    override val columns: List<Buffer<UShort>>
+        get() = List(rowNum) { c ->
             GslUShortVector(
                 gsl_matrix_ushort_column(nativeHandle, c.toULong()).placeTo(scope).pointed.vector.ptr,
                 scope,
@@ -199,13 +187,6 @@ internal class GslUShortMatrix(
     }
 
     override fun close(): Unit = gsl_matrix_ushort_free(nativeHandle)
-
-    override fun equals(other: Any?): Boolean {
-        if (other is GslUShortMatrix)
-            return gsl_matrix_ushort_equal(nativeHandle, other.nativeHandle) == 1
-
-        return super.equals(other)
-    }
 }
 
 internal class GslLongMatrix(
@@ -219,8 +200,9 @@ internal class GslLongMatrix(
     override val colNum: Int
         get() = nativeHandle.pointed.size2.toInt()
 
-    override val rows: Buffer<Buffer<Long>>
-        get() = VirtualBuffer(rowNum) { r ->
+    @PerformancePitfall
+    override val rows: List<Buffer<Long>>
+        get() = List(rowNum) { r ->
             GslLongVector(
                 gsl_matrix_long_row(nativeHandle, r.toULong()).placeTo(scope).pointed.vector.ptr,
                 scope,
@@ -228,8 +210,9 @@ internal class GslLongMatrix(
             )
         }
 
-    override val columns: Buffer<Buffer<Long>>
-        get() = VirtualBuffer(rowNum) { c ->
+    @PerformancePitfall
+    override val columns: List<Buffer<Long>>
+        get() = List(rowNum) { c ->
             GslLongVector(
                 gsl_matrix_long_column(nativeHandle, c.toULong()).placeTo(scope).pointed.vector.ptr,
                 scope,
@@ -250,13 +233,6 @@ internal class GslLongMatrix(
     }
 
     override fun close(): Unit = gsl_matrix_long_free(nativeHandle)
-
-    override fun equals(other: Any?): Boolean {
-        if (other is GslLongMatrix)
-            return gsl_matrix_long_equal(nativeHandle, other.nativeHandle) == 1
-
-        return super.equals(other)
-    }
 }
 
 internal class GslULongMatrix(
@@ -270,8 +246,9 @@ internal class GslULongMatrix(
     override val colNum: Int
         get() = nativeHandle.pointed.size2.toInt()
 
-    override val rows: Buffer<Buffer<ULong>>
-        get() = VirtualBuffer(rowNum) { r ->
+    @PerformancePitfall
+    override val rows: List<Buffer<ULong>>
+        get() = List(rowNum) { r ->
             GslULongVector(
                 gsl_matrix_ulong_row(nativeHandle, r.toULong()).placeTo(scope).pointed.vector.ptr,
                 scope,
@@ -279,8 +256,9 @@ internal class GslULongMatrix(
             )
         }
 
-    override val columns: Buffer<Buffer<ULong>>
-        get() = VirtualBuffer(rowNum) { c ->
+    @PerformancePitfall
+    override val columns: List<Buffer<ULong>>
+        get() = List(rowNum) { c ->
             GslULongVector(
                 gsl_matrix_ulong_column(nativeHandle, c.toULong()).placeTo(scope).pointed.vector.ptr,
                 scope,
@@ -301,13 +279,6 @@ internal class GslULongMatrix(
     }
 
     override fun close(): Unit = gsl_matrix_ulong_free(nativeHandle)
-
-    override fun equals(other: Any?): Boolean {
-        if (other is GslULongMatrix)
-            return gsl_matrix_ulong_equal(nativeHandle, other.nativeHandle) == 1
-
-        return super.equals(other)
-    }
 }
 
 internal class GslIntMatrix(
@@ -321,8 +292,9 @@ internal class GslIntMatrix(
     override val colNum: Int
         get() = nativeHandle.pointed.size2.toInt()
 
-    override val rows: Buffer<Buffer<Int>>
-        get() = VirtualBuffer(rowNum) { r ->
+    @PerformancePitfall
+    override val rows: List<Buffer<Int>>
+        get() = List(rowNum) { r ->
             GslIntVector(
                 gsl_matrix_int_row(nativeHandle, r.toULong()).placeTo(scope).pointed.vector.ptr,
                 scope,
@@ -330,8 +302,9 @@ internal class GslIntMatrix(
             )
         }
 
-    override val columns: Buffer<Buffer<Int>>
-        get() = VirtualBuffer(rowNum) { c ->
+    @PerformancePitfall
+    override val columns: List<Buffer<Int>>
+        get() = List(rowNum) { c ->
             GslIntVector(
                 gsl_matrix_int_column(nativeHandle, c.toULong()).placeTo(scope).pointed.vector.ptr,
                 scope,
@@ -352,13 +325,6 @@ internal class GslIntMatrix(
     }
 
     override fun close(): Unit = gsl_matrix_int_free(nativeHandle)
-
-    override fun equals(other: Any?): Boolean {
-        if (other is GslIntMatrix)
-            return gsl_matrix_int_equal(nativeHandle, other.nativeHandle) == 1
-
-        return super.equals(other)
-    }
 }
 
 internal class GslUIntMatrix(
@@ -372,8 +338,9 @@ internal class GslUIntMatrix(
     override val colNum: Int
         get() = nativeHandle.pointed.size2.toInt()
 
-    override val rows: Buffer<Buffer<UInt>>
-        get() = VirtualBuffer(rowNum) { r ->
+    @PerformancePitfall
+    override val rows: List<Buffer<UInt>>
+        get() = List(rowNum) { r ->
             GslUIntVector(
                 gsl_matrix_uint_row(nativeHandle, r.toULong()).placeTo(scope).pointed.vector.ptr,
                 scope,
@@ -381,8 +348,9 @@ internal class GslUIntMatrix(
             )
         }
 
-    override val columns: Buffer<Buffer<UInt>>
-        get() = VirtualBuffer(rowNum) { c ->
+    @PerformancePitfall
+    override val columns: List<Buffer<UInt>>
+        get() = List(rowNum) { c ->
             GslUIntVector(
                 gsl_matrix_uint_column(nativeHandle, c.toULong()).placeTo(scope).pointed.vector.ptr,
                 scope,
@@ -403,12 +371,5 @@ internal class GslUIntMatrix(
     }
 
     override fun close(): Unit = gsl_matrix_uint_free(nativeHandle)
-
-    override fun equals(other: Any?): Boolean {
-        if (other is GslUIntMatrix)
-            return gsl_matrix_uint_equal(nativeHandle, other.nativeHandle) == 1
-
-        return super.equals(other)
-    }
 }
 

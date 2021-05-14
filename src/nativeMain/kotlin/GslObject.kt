@@ -13,7 +13,10 @@ import kotlinx.cinterop.DeferScope
  *
  * @param scope the scope where this object is declared.
  */
-public abstract class GslObject<H : CStructVar> internal constructor(internal val scope: AutofreeScope, internal val owned: Boolean) {
+public abstract class GslObject<H : CStructVar> internal constructor(
+    internal val scope: AutofreeScope,
+    private val owned: Boolean,
+) {
     internal abstract val rawNativeHandle: CPointer<H>
     private var isClosed: Boolean = false
 
