@@ -7,6 +7,7 @@ import space.kscience.kmath.gsl.codegen.matricesCodegen
 import space.kscience.kmath.gsl.codegen.vectorsCodegen
 
 plugins {
+    `maven-publish`
     kotlin("multiplatform")
     id("ru.mipt.npm.gradle.project")
     id("ru.mipt.npm.gradle.common")
