@@ -38,7 +38,6 @@ jobs:
         run: >
           ./gradlew release --no-daemon
           -Ppublishing.enabled=true
-          -Ppublishing.platform=linuxX64
           -Ppublishing.github.user=${{ secrets.PUBLISHING_GITHUB_USER }}
           -Ppublishing.github.token=${{ secrets.PUBLISHING_GITHUB_TOKEN }}
           -Ppublishing.github=false
