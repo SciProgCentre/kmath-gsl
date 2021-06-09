@@ -41,5 +41,6 @@ jobs:
           -Ppublishing.platform=linuxX64
           -Ppublishing.github.user=${{ secrets.PUBLISHING_GITHUB_USER }}
           -Ppublishing.github.token=${{ secrets.PUBLISHING_GITHUB_TOKEN }}
+          -Ppublishing.github=false
           -Ppublishing.space.user=${{ secrets.PUBLISHING_SPACE_USER }}
           -Ppublishing.space.token=${{ secrets.PUBLISHING_SPACE_TOKEN }}
