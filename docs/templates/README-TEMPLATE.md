@@ -8,4 +8,8 @@
 
 ${features}
 
+## Requirements:
+
+`kmath-gsl` needs a BLAS implementation installed. To achieve better performance, MKL or ATLAS can be used.
+
 ${artifact}
