@@ -48,11 +48,5 @@ fun vectorsCodegen(outputFile: String): Unit = File(outputFile).run {
         w.appendLine()
         w.createVectorClass("double", "Double")
         w.createVectorClass("float", "Float")
-        w.createVectorClass("short", "Short")
-        w.createVectorClass("ushort", "UShort")
-        w.createVectorClass("long", "Long")
-        w.createVectorClass("ulong", "ULong")
-        w.createVectorClass("int", "Int")
-        w.createVectorClass("uint", "UInt")
     }
 }

@@ -75,11 +75,5 @@ fun matricesCodegen(outputFile: String): Unit = File(outputFile).run {
         it.appendLine()
         it.createMatrixClass("double", "Double")
         it.createMatrixClass("float", "Float")
-        it.createMatrixClass("short", "Short")
-        it.createMatrixClass("ushort", "UShort")
-        it.createMatrixClass("long", "Long")
-        it.createMatrixClass("ulong", "ULong")
-        it.createMatrixClass("int", "Int")
-        it.createMatrixClass("uint", "UInt")
     }
 }
