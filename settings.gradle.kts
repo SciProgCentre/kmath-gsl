@@ -1,12 +1,11 @@
 pluginManagement {
     repositories {
-        mavenLocal()
         mavenCentral()
         gradlePluginPortal()
         maven("https://repo.kotlin.link")
     }
 
-    val toolsVersion = "0.9.5-dev-2"
+    val toolsVersion = "0.9.9"
 
     plugins {
         id("ru.mipt.npm.gradle.project") version toolsVersion
