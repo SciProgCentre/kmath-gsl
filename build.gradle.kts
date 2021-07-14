@@ -12,6 +12,7 @@ plugins {
     kotlin("multiplatform")
     id("ru.mipt.npm.gradle.project")
     id("de.undercouch.download")
+    id("io.github.krakowski.jextract")
 }
 
 group = "space.kscience"
@@ -60,13 +61,13 @@ kotlin {
         all {
             with(languageSettings) {
                 progressiveMode = true
-                useExperimentalAnnotation("kotlin.time.ExperimentalTime")
+                optIn("kotlin.time.ExperimentalTime")
             }
         }
 
         commonMain {
             dependencies {
-                api("space.kscience:kmath-complex:0.3.0-dev-12")
+                api("space.kscience:kmath-complex:0.3.0-dev-17")
             }
         }
 
@@ -143,6 +144,33 @@ kotlin {
 
     tasks[libgsl.interopProcessingTaskName].dependsOn(writeDefFile)
 
+    jvm {
+        compilations.all {
+            kotlinOptions.freeCompilerArgs += "-Xjvm-default=enable"
+        }
+    }
+
+    tasks.jextract {
+        dependsOn(extractGsl)
+        toolchain.set("/home/commandertvis/jdk-17/")
+
+        header("gsl.h") {
+            includes.set(listOf("${thirdPartyDir}/include/"))
+
+            libraries.set(listOf(
+                "/home/commandertvis/.konan/third-party/kmath-gsl-0.3.0-dev-1/lib/libgsl.so",
+//                "/home/commandertvis/.konan/third-party/kmath-gsl-0.3.0-dev-1/lib/libgslcblas.so",
+            ))
+
+            targetPackage.set("org.gnu.gsl")
+            className.set("GSL")
+        }
+    }
+
+    val jvmMain by sourceSets.getting {
+        kotlin.srcDir("./build/generated/sources/jextract/main/java")
+    }
+
     targets.all {
         compilations.all {
             kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
@@ -164,7 +192,7 @@ readme {
 
 ksciencePublish {
     vcs("https://github.com/mipt-npm/${rootProject.name}")
-    space(publish = true)
+    space()
 }
 
 apiValidation.nonPublicMarkers.add("space.kscience.kmath.misc.UnstableKMathAPI")

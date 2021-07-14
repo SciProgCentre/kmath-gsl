@@ -1,6 +1,5 @@
 package space.kscience.kmath.gsl
 
-import kotlinx.cinterop.AutofreeScope
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.pointed
 import org.gnu.gsl.gsl_permutation
@@ -9,7 +8,7 @@ import org.gnu.gsl.gsl_permutation_get
 
 internal class GslPermutation(
     override val rawNativeHandle: CPointer<gsl_permutation>,
-    scope: AutofreeScope,
+    scope: DeferScope,
     owned: Boolean,
 ) : GslObject<gsl_permutation>(scope, owned) {
     val size get() = nativeHandle.pointed.size.toInt()

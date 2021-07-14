@@ -13,7 +13,7 @@ private fun Appendable.createMatrixClass(
 
     @Language("kotlin") val text = """internal class $className(
     override val rawNativeHandle: CPointer<$structName>,
-    scope: AutofreeScope,
+    scope: DeferScope,
     owned: Boolean,
 ) : GslMatrix<$kotlinTypeName, $structName>(scope, owned) {
     override val rowNum: Int

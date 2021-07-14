@@ -7,7 +7,7 @@ import space.kscience.kmath.structures.*
 
 internal class GslDoubleMatrix(
     override val rawNativeHandle: CPointer<gsl_matrix>,
-    scope: AutofreeScope,
+    scope: DeferScope,
     owned: Boolean,
 ) : GslMatrix<Double, gsl_matrix>(scope, owned) {
     override val rowNum: Int
@@ -53,7 +53,7 @@ internal class GslDoubleMatrix(
 
 internal class GslFloatMatrix(
     override val rawNativeHandle: CPointer<gsl_matrix_float>,
-    scope: AutofreeScope,
+    scope: DeferScope,
     owned: Boolean,
 ) : GslMatrix<Float, gsl_matrix_float>(scope, owned) {
     override val rowNum: Int

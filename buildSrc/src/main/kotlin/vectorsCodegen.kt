@@ -14,7 +14,7 @@ private fun Appendable.createVectorClass(
     @Language("kotlin") val text =
         """internal class $className(
     override val rawNativeHandle: CPointer<$structName>, 
-    scope: AutofreeScope, 
+    scope: DeferScope, 
     owned: Boolean,
 ) : GslVector<$kotlinTypeName, $structName>(scope, owned) {
     override val size: Int get() = nativeHandle.pointed.size.toInt()

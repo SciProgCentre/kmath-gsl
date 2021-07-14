@@ -15,13 +15,12 @@ internal fun Complex.toGsl(): CValue<gsl_complex> = cValue {
 
 internal class GslComplexMatrix(
     override val rawNativeHandle: CPointer<gsl_matrix_complex>,
-    scope: AutofreeScope,
+    scope: DeferScope,
     owned: Boolean,
 ) : GslMatrix<Complex, gsl_matrix_complex>(scope, owned) {
     override val rowNum: Int get() = nativeHandle.pointed.size1.toInt()
     override val colNum: Int get() = nativeHandle.pointed.size2.toInt()
 
-    @PerformancePitfall
     override val rows: List<Buffer<Complex>>
         get() = List(rowNum) { r ->
             GslComplexVector(
@@ -31,7 +30,6 @@ internal class GslComplexMatrix(
             )
         }
 
-    @PerformancePitfall
     override val columns: List<Buffer<Complex>>
         get() = List(rowNum) { c ->
             GslComplexVector(
@@ -58,7 +56,7 @@ internal class GslComplexMatrix(
 
 internal class GslComplexVector(
     override val rawNativeHandle: CPointer<gsl_vector_complex>,
-    scope: AutofreeScope,
+    scope: DeferScope,
     owned: Boolean,
 ) : GslVector<Complex, gsl_vector_complex>(scope, owned) {
     override val size: Int get() = nativeHandle.pointed.size.toInt()

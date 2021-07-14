@@ -5,7 +5,7 @@ import org.gnu.gsl.*
 
 internal class GslDoubleVector(
     override val rawNativeHandle: CPointer<gsl_vector>, 
-    scope: AutofreeScope, 
+    scope: DeferScope, 
     owned: Boolean,
 ) : GslVector<Double, gsl_vector>(scope, owned) {
     override val size: Int get() = nativeHandle.pointed.size.toInt()
@@ -23,7 +23,7 @@ internal class GslDoubleVector(
 
 internal class GslFloatVector(
     override val rawNativeHandle: CPointer<gsl_vector_float>, 
-    scope: AutofreeScope, 
+    scope: DeferScope, 
     owned: Boolean,
 ) : GslVector<Float, gsl_vector_float>(scope, owned) {
     override val size: Int get() = nativeHandle.pointed.size.toInt()
