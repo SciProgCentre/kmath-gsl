@@ -263,7 +263,7 @@ public class GslFloatLinearSpace(private val scope: AutofreeScope) :
 
     public override fun Matrix<Float>.times(value: Float): GslMatrix<Float, gsl_matrix_float> {
         val g1 = toGsl().copy()
-        callGslMatrixFloatScale(g1.nativeHandle, value)
+        gsl_matrix_float_scale2(g1.nativeHandle, value)
         return g1
     }
 
@@ -279,8 +279,6 @@ public class GslFloatLinearSpace(private val scope: AutofreeScope) :
         return g1
     }
 }
-
-internal expect fun callGslMatrixFloatScale(ptr: CPointer<gsl_matrix_float>, value: Float)
 
 /**
  * Invokes [block] inside newly created [GslFloatLinearSpace] which is disposed when the block is invoked.

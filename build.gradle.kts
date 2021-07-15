@@ -127,6 +127,10 @@ kotlin {
                     staticLibraries.mingw=libgsl.a libgslcblas.a
                     compilerOpts.mingw=-IC:/msys64/mingw64/include/
                     libraryPaths.mingw=C:/msys64/mingw64/lib/
+                    ---
+                    inline int gsl_matrix_float_scale2(gsl_matrix_float *a, const float x) {
+                        return gsl_matrix_float_scale(a, x);
+                    }
 
                 """.trimIndent()
         )
