@@ -167,8 +167,8 @@ readme {
 }
 
 ksciencePublish {
-    github("kmath-gsl")
-    space()
+    vcs("https://github.com/mipt-npm/kmath-gsl")
+    space(publish = true)
 }
 
 apiValidation.nonPublicMarkers.add("space.kscience.kmath.misc.UnstableKMathAPI")
