@@ -14,8 +14,10 @@ ${artifact}
 
 ## Additional requirements
 
-Final binaries using `kmath-gsl` need a BLAS implementation installed (because of dynamic linking to `libblas`). To achieve better performance, MKL or ATLAS can be used.
+On Linux, final binaries using `kmath-gsl` need a BLAS implementation installed (because of dynamic linking to `libblas`). To achieve better performance, MKL or ATLAS can be used.
+
+On Windows, default CBLAS provided by GSL is linked statically.
 
 ## Multiplatform support
 
-Currently, only `linuxX64` is supported. Planned platforms are `macosX64`, `mingwX64`, and `jvm` (with [JEP-389](https://openjdk.java.net/jeps/389)).
+Currently, only `linuxX64` and `mingwX64` targets are supported. Planned platforms are `macosX64`, and `jvm` (with [JEP-389](https://openjdk.java.net/jeps/389)).

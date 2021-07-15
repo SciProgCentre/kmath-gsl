@@ -2,8 +2,7 @@ name: Dokka publication
 
 on:
   push:
-    branches:
-      - master
+    branches: [ master ]
 
 jobs:
   build:

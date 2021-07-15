@@ -3,41 +3,57 @@ name: Gradle publish
 on:
   workflow_dispatch:
   release:
-    types:
-      - created
+    types: [ created ]
 
 jobs:
   publish:
+    strategy:
+      matrix:
+        os: [ ubuntu-20.04, windows-latest ]
     environment:
-      name: publish
+      name: ${{matrix.os}}
     runs-on: ubuntu-20.04
     steps:
-      - name: Checkout the repo
-        uses: actions/checkout@v2
-      - name: Set up JDK 11
-        uses: DeLaGuardo/setup-graalvm@4.0
+      - uses: actions/checkout@v2
+      - uses: DeLaGuardo/setup-graalvm@4.0
         with:
           graalvm: 21.1.0
           java: java11
           arch: amd64
-      - name: Cache gradle
-        uses: actions/cache@v2
+      - if: matrix.os == 'windows-latest'
+        uses: msys2/setup-msys2@v2
+        with:
+          release: false
+          path-type: inherit
+      - if: matrix.os == 'windows-latest'
+        shell: msys2 {0}
+        run: pacman --noconfirm -S mingw-w64-x86_64-gsl
+      - uses: actions/cache@v2
         with:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('*.gradle.kts') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-      - name: Cache konan
-        uses: actions/cache@v2
+      - uses: actions/cache@v2
         with:
           path: ~/.konan
           key: ${{ runner.os }}-gradle-${{ hashFiles('*.gradle.kts') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-      - name: Publish Ubuntu Artifacts
+      - if: matrix.os == 'ubuntu-20.04'
         run: >
           ./gradlew release --no-daemon
           -Ppublishing.enabled=true
+          -Ppublishing.github.user=${{ secrets.PUBLISHING_GITHUB_USER }}
+          -Ppublishing.github.token=${{ secrets.PUBLISHING_GITHUB_TOKEN }}
+          -Ppublishing.github=false
+          -Ppublishing.space.user=${{ secrets.PUBLISHING_SPACE_USER }}
+          -Ppublishing.space.token=${{ secrets.PUBLISHING_SPACE_TOKEN }}
+      - if: matrix.os == 'windows-latest'
+        run: >
+          ./gradlew release --no-daemon
+          -Ppublishing.enabled=true
+          -Ppublishing.platform=mingwX64
           -Ppublishing.github.user=${{ secrets.PUBLISHING_GITHUB_USER }}
           -Ppublishing.github.token=${{ secrets.PUBLISHING_GITHUB_TOKEN }}
           -Ppublishing.github=false
