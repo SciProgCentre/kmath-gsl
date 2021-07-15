@@ -22,10 +22,10 @@
           </div>
           <div class="cover ">
             <h1 class="cover"><span>Gsl</span><wbr></wbr><span>Linear</span><wbr></wbr><span>Space</span></h1>
-            <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/nativeMain"><div class="symbol monospace">abstract class <a href="index.html">GslLinearSpace</a>&lt;<a href="index.html">T</a> : <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html">Any</a>, out <a href="index.html">A</a>, <a href="index.html">H1</a>, <a href="index.html">H2</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><p class="paragraph">Represents matrix context implementing where all the operations are delegated to GSL.</p></div></div>
+            <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/nativeMain"><div class="symbol monospace">abstract class <a href="index.html">GslLinearSpace</a>&lt;<a href="index.html">T</a> : <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html">Any</a>, out <a href="index.html">A</a> : <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/kmath-core/space.kscience.kmath.operations/-ring/index.html">Ring</a>&lt;<a href="index.html">T</a>&gt;, <a href="index.html">H1</a>, <a href="index.html">H2</a>&gt; : <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/kmath-core/space.kscience.kmath.linear/-linear-space/index.html">LinearSpace</a>&lt;<a href="index.html">T</a>, <a href="index.html">A</a>&gt; <span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><p class="paragraph">Represents matrix context implementing where all the operations are delegated to GSL.</p></div></div>
           </div>
           <div class="tabbedcontent">
-            <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Constructors">Constructors</button><button class="section-tab" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Inheritors">Inheritors</button></div>
+            <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Constructors">Constructors</button><button class="section-tab" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button><button class="section-tab" data-togglable="Inheritors">Inheritors</button></div>
             <div class="tabs-section-body">
               <h2 class="tabbedcontent">Constructors</h2>
               <div class="table" data-togglable="Constructors"><a data-name="1120783973%2FConstructors%2F-1178245650" anchor-label="GslLinearSpace" id="1120783973%2FConstructors%2F-1178245650" data-filterable-set=":dokkaHtml/nativeMain"></a>
@@ -43,60 +43,177 @@
                 </div>
               </div>
               <h2 class="">Functions</h2>
-              <div class="table" data-togglable="Functions"><a data-name="1626285520%2FFunctions%2F-1178245650" anchor-label="buildMatrix" id="1626285520%2FFunctions%2F-1178245650" data-filterable-set=":dokkaHtml/nativeMain"></a>
+              <div class="table" data-togglable="Functions"><a data-name="1117451397%2FFunctions%2F-1178245650" anchor-label="buildMatrix" id="1117451397%2FFunctions%2F-1178245650" data-filterable-set=":dokkaHtml/nativeMain"></a>
                 <div class="table-row" data-filterable-current=":dokkaHtml/nativeMain" data-filterable-set=":dokkaHtml/nativeMain">
                   <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="build-matrix.html">buildMatrix</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1626285520%2FFunctions%2F-1178245650"></span>
+                    <div class=""><span class="inline-flex"><a href="build-matrix.html">buildMatrix</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1117451397%2FFunctions%2F-1178245650"></span>
                           <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                         </span></span></div>
                     <div>
                       <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/nativeMain" data-filterable-set=":dokkaHtml/nativeMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
 
   <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/nativeMain"><div class="symbol monospace">open fun <a href="build-matrix.html">buildMatrix</a>(rows: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, columns: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, initializer: <a href="index.html">A</a>.(i: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, j: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>) -&gt; <a href="index.html">T</a>): <a href="../-gsl-matrix/index.html">GslMatrix</a>&lt;<a href="index.html">T</a>, <a href="index.html">H1</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/nativeMain"><div class="symbol monospace">open override fun <a href="build-matrix.html">buildMatrix</a>(rows: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, columns: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, initializer: <a href="index.html">A</a>.(i: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, j: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>) -&gt; <a href="index.html">T</a>): <a href="../-gsl-matrix/index.html">GslMatrix</a>&lt;<a href="index.html">T</a>, <a href="index.html">H1</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
   </div>
 </div>
 </div>
                     </div>
                   </div>
                 </div>
-<a data-name="-2079767442%2FFunctions%2F-1178245650" anchor-label="buildVector" id="-2079767442%2FFunctions%2F-1178245650" data-filterable-set=":dokkaHtml/nativeMain"></a>
+<a data-name="-1075351795%2FFunctions%2F-1178245650" anchor-label="buildVector" id="-1075351795%2FFunctions%2F-1178245650" data-filterable-set=":dokkaHtml/nativeMain"></a>
                 <div class="table-row" data-filterable-current=":dokkaHtml/nativeMain" data-filterable-set=":dokkaHtml/nativeMain">
                   <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="build-vector.html">buildVector</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2079767442%2FFunctions%2F-1178245650"></span>
+                    <div class=""><span class="inline-flex"><a href="build-vector.html">buildVector</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1075351795%2FFunctions%2F-1178245650"></span>
                           <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                         </span></span></div>
                     <div>
                       <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/nativeMain" data-filterable-set=":dokkaHtml/nativeMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
 
   <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/nativeMain"><div class="symbol monospace">open fun <a href="build-vector.html">buildVector</a>(size: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, initializer: <a href="index.html">A</a>.(<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>) -&gt; <a href="index.html">T</a>): <a href="../-gsl-vector/index.html">GslVector</a>&lt;<a href="index.html">T</a>, <a href="index.html">H2</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/nativeMain"><div class="symbol monospace">open override fun <a href="build-vector.html">buildVector</a>(size: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, initializer: <a href="index.html">A</a>.(<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>) -&gt; <a href="index.html">T</a>): <a href="../-gsl-vector/index.html">GslVector</a>&lt;<a href="index.html">T</a>, <a href="index.html">H2</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
   </div>
 </div>
 </div>
                     </div>
                   </div>
                 </div>
-<a data-name="921308201%2FFunctions%2F-1178245650" anchor-label="toGsl" id="921308201%2FFunctions%2F-1178245650" data-filterable-set=":dokkaHtml/nativeMain"></a>
+<a data-name="-922098255%2FFunctions%2F-1178245650" anchor-label="dot" id="-922098255%2FFunctions%2F-1178245650" data-filterable-set=":dokkaHtml/nativeMain"></a>
                 <div class="table-row" data-filterable-current=":dokkaHtml/nativeMain" data-filterable-set=":dokkaHtml/nativeMain">
                   <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="to-gsl.html">toGsl</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="921308201%2FFunctions%2F-1178245650"></span>
+                    <div class=""><span class="inline-flex"><a href="index.html#1871737026%2FFunctions%2F-1178245650">dot</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-922098255%2FFunctions%2F-1178245650"></span>
                           <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                         </span></span></div>
                     <div>
                       <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/nativeMain" data-filterable-set=":dokkaHtml/nativeMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
 
   <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/nativeMain"><div class="symbol monospace">fun <span data-unresolved-link="/&amp;lt;ERROR CLASS&amp;gt;///PointingToDeclaration/">&lt;ERROR CLASS&gt;</span>&lt;<a href="index.html">T</a>&gt;.<a href="to-gsl.html">toGsl</a>(): <a href="../-gsl-matrix/index.html">GslMatrix</a>&lt;<a href="index.html">T</a>, <a href="index.html">H1</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/nativeMain"><div class="symbol monospace">open infix fun <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/space.kscience.kmath.linear/-matrix/index.html">Matrix</a>&lt;<a href="index.html">T</a>&gt;.<a href="index.html#1871737026%2FFunctions%2F-1178245650">dot</a>(other: <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/space.kscience.kmath.linear/-matrix/index.html">Matrix</a>&lt;<a href="index.html">T</a>&gt;): <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/space.kscience.kmath.linear/-matrix/index.html">Matrix</a>&lt;<a href="index.html">T</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="symbol monospace">open infix fun <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/space.kscience.kmath.linear/-matrix/index.html">Matrix</a>&lt;<a href="index.html">T</a>&gt;.<a href="index.html#-1836143705%2FFunctions%2F-1178245650">dot</a>(vector: <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/space.kscience.kmath.linear/-point/index.html">Point</a>&lt;<a href="index.html">T</a>&gt;): <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/space.kscience.kmath.linear/-point/index.html">Point</a>&lt;<a href="index.html">T</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
   </div>
-<a data-name="-637694047%2FFunctions%2F-1178245650" anchor-label="toGsl" id="-637694047%2FFunctions%2F-1178245650" data-filterable-set=":dokkaHtml/nativeMain"></a><div class="brief "><a data-name="-637694047%2FFunctions%2F-1178245650" anchor-label="toGsl" id="-637694047%2FFunctions%2F-1178245650" data-filterable-set=":dokkaHtml/nativeMain"></a>Converts this matrix to GSL one.</div></div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-716158482%2FFunctions%2F-1178245650" anchor-label="getFeature" id="-716158482%2FFunctions%2F-1178245650" data-filterable-set=":dokkaHtml/nativeMain"></a>
+                <div class="table-row" data-filterable-current=":dokkaHtml/nativeMain" data-filterable-set=":dokkaHtml/nativeMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="index.html#-716158482%2FFunctions%2F-1178245650">getFeature</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-716158482%2FFunctions%2F-1178245650"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/nativeMain" data-filterable-set=":dokkaHtml/nativeMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/nativeMain"><div class="symbol monospace">open fun &lt;<a href="index.html#-716158482%2FFunctions%2F-1178245650">F</a> : <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/kmath-core/space.kscience.kmath.nd/-structure-feature/index.html">StructureFeature</a>&gt; <a href="index.html#-716158482%2FFunctions%2F-1178245650">getFeature</a>(structure: <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/space.kscience.kmath.linear/-matrix/index.html">Matrix</a>&lt;<a href="index.html">T</a>&gt;, type: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.reflect/-k-class/index.html">KClass</a>&lt;out <a href="index.html#-716158482%2FFunctions%2F-1178245650">F</a>&gt;): <a href="index.html#-716158482%2FFunctions%2F-1178245650">F</a>?<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1121618452%2FFunctions%2F-1178245650" anchor-label="minus" id="-1121618452%2FFunctions%2F-1178245650" data-filterable-set=":dokkaHtml/nativeMain"></a>
+                <div class="table-row" data-filterable-current=":dokkaHtml/nativeMain" data-filterable-set=":dokkaHtml/nativeMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="index.html#17577147%2FFunctions%2F-1178245650">minus</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1121618452%2FFunctions%2F-1178245650"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/nativeMain" data-filterable-set=":dokkaHtml/nativeMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/nativeMain"><div class="symbol monospace">open operator fun <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/space.kscience.kmath.linear/-matrix/index.html">Matrix</a>&lt;<a href="index.html">T</a>&gt;.<a href="index.html#17577147%2FFunctions%2F-1178245650">minus</a>(other: <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/space.kscience.kmath.linear/-matrix/index.html">Matrix</a>&lt;<a href="index.html">T</a>&gt;): <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/space.kscience.kmath.linear/-matrix/index.html">Matrix</a>&lt;<a href="index.html">T</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="symbol monospace">open operator fun <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/space.kscience.kmath.linear/-point/index.html">Point</a>&lt;<a href="index.html">T</a>&gt;.<a href="index.html#1985070141%2FFunctions%2F-1178245650">minus</a>(other: <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/space.kscience.kmath.linear/-point/index.html">Point</a>&lt;<a href="index.html">T</a>&gt;): <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/space.kscience.kmath.linear/-point/index.html">Point</a>&lt;<a href="index.html">T</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-765079442%2FFunctions%2F-1178245650" anchor-label="plus" id="-765079442%2FFunctions%2F-1178245650" data-filterable-set=":dokkaHtml/nativeMain"></a>
+                <div class="table-row" data-filterable-current=":dokkaHtml/nativeMain" data-filterable-set=":dokkaHtml/nativeMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="index.html#-149756623%2FFunctions%2F-1178245650">plus</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-765079442%2FFunctions%2F-1178245650"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/nativeMain" data-filterable-set=":dokkaHtml/nativeMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/nativeMain"><div class="symbol monospace">open operator fun <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/space.kscience.kmath.linear/-matrix/index.html">Matrix</a>&lt;<a href="index.html">T</a>&gt;.<a href="index.html#-149756623%2FFunctions%2F-1178245650">plus</a>(other: <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/space.kscience.kmath.linear/-matrix/index.html">Matrix</a>&lt;<a href="index.html">T</a>&gt;): <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/space.kscience.kmath.linear/-matrix/index.html">Matrix</a>&lt;<a href="index.html">T</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="symbol monospace">open operator fun <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/space.kscience.kmath.linear/-point/index.html">Point</a>&lt;<a href="index.html">T</a>&gt;.<a href="index.html#-88882125%2FFunctions%2F-1178245650">plus</a>(other: <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/space.kscience.kmath.linear/-point/index.html">Point</a>&lt;<a href="index.html">T</a>&gt;): <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/space.kscience.kmath.linear/-point/index.html">Point</a>&lt;<a href="index.html">T</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1776681134%2FFunctions%2F-1178245650" anchor-label="times" id="-1776681134%2FFunctions%2F-1178245650" data-filterable-set=":dokkaHtml/nativeMain"></a>
+                <div class="table-row" data-filterable-current=":dokkaHtml/nativeMain" data-filterable-set=":dokkaHtml/nativeMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="index.html#-396603996%2FFunctions%2F-1178245650">times</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1776681134%2FFunctions%2F-1178245650"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/nativeMain" data-filterable-set=":dokkaHtml/nativeMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/nativeMain"><div class="symbol monospace">open operator fun <a href="index.html">T</a>.<a href="index.html#-396603996%2FFunctions%2F-1178245650">times</a>(m: <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/space.kscience.kmath.linear/-matrix/index.html">Matrix</a>&lt;<a href="index.html">T</a>&gt;): <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/space.kscience.kmath.linear/-matrix/index.html">Matrix</a>&lt;<a href="index.html">T</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="symbol monospace">open operator fun <a href="index.html">T</a>.<a href="index.html#-968094843%2FFunctions%2F-1178245650">times</a>(v: <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/space.kscience.kmath.linear/-point/index.html">Point</a>&lt;<a href="index.html">T</a>&gt;): <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/space.kscience.kmath.linear/-point/index.html">Point</a>&lt;<a href="index.html">T</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="symbol monospace">open operator fun <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/space.kscience.kmath.linear/-matrix/index.html">Matrix</a>&lt;<a href="index.html">T</a>&gt;.<a href="index.html#1377402054%2FFunctions%2F-1178245650">times</a>(value: <a href="index.html">T</a>): <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/space.kscience.kmath.linear/-matrix/index.html">Matrix</a>&lt;<a href="index.html">T</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="symbol monospace">open operator fun <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/space.kscience.kmath.linear/-point/index.html">Point</a>&lt;<a href="index.html">T</a>&gt;.<a href="index.html#-2089112439%2FFunctions%2F-1178245650">times</a>(value: <a href="index.html">T</a>): <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/space.kscience.kmath.linear/-point/index.html">Point</a>&lt;<a href="index.html">T</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1979233559%2FFunctions%2F-1178245650" anchor-label="toGsl" id="-1979233559%2FFunctions%2F-1178245650" data-filterable-set=":dokkaHtml/nativeMain"></a>
+                <div class="table-row" data-filterable-current=":dokkaHtml/nativeMain" data-filterable-set=":dokkaHtml/nativeMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="to-gsl.html">toGsl</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1979233559%2FFunctions%2F-1178245650"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/nativeMain" data-filterable-set=":dokkaHtml/nativeMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/nativeMain"><div class="symbol monospace">fun <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/space.kscience.kmath.linear/-matrix/index.html">Matrix</a>&lt;<a href="index.html">T</a>&gt;.<a href="to-gsl.html">toGsl</a>(): <a href="../-gsl-matrix/index.html">GslMatrix</a>&lt;<a href="index.html">T</a>, <a href="index.html">H1</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-1222216943%2FFunctions%2F-1178245650" anchor-label="toGsl" id="-1222216943%2FFunctions%2F-1178245650" data-filterable-set=":dokkaHtml/nativeMain"></a><div class="brief "><a data-name="-1222216943%2FFunctions%2F-1178245650" anchor-label="toGsl" id="-1222216943%2FFunctions%2F-1178245650" data-filterable-set=":dokkaHtml/nativeMain"></a>Converts this matrix to GSL one.</div></div>
 <div class="divergent-group" data-filterable-current=":dokkaHtml/nativeMain" data-filterable-set=":dokkaHtml/nativeMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
 
   <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/nativeMain"><div class="symbol monospace">fun <span data-unresolved-link="/&amp;lt;ERROR CLASS&amp;gt;///PointingToDeclaration/">&lt;ERROR CLASS&gt;</span>&lt;<a href="index.html">T</a>&gt;.<a href="to-gsl.html">toGsl</a>(): <a href="../-gsl-vector/index.html">GslVector</a>&lt;<a href="index.html">T</a>, <a href="index.html">H2</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/nativeMain"><div class="symbol monospace">fun <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/space.kscience.kmath.linear/-point/index.html">Point</a>&lt;<a href="index.html">T</a>&gt;.<a href="to-gsl.html">toGsl</a>(): <a href="../-gsl-vector/index.html">GslVector</a>&lt;<a href="index.html">T</a>, <a href="index.html">H2</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
   </div>
-<a data-name="-877711340%2FFunctions%2F-1178245650" anchor-label="toGsl" id="-877711340%2FFunctions%2F-1178245650" data-filterable-set=":dokkaHtml/nativeMain"></a><div class="brief "><a data-name="-877711340%2FFunctions%2F-1178245650" anchor-label="toGsl" id="-877711340%2FFunctions%2F-1178245650" data-filterable-set=":dokkaHtml/nativeMain"></a>Converts this point to GSL one.</div></div>
+<a data-name="-1004150236%2FFunctions%2F-1178245650" anchor-label="toGsl" id="-1004150236%2FFunctions%2F-1178245650" data-filterable-set=":dokkaHtml/nativeMain"></a><div class="brief "><a data-name="-1004150236%2FFunctions%2F-1178245650" anchor-label="toGsl" id="-1004150236%2FFunctions%2F-1178245650" data-filterable-set=":dokkaHtml/nativeMain"></a>Converts this point to GSL one.</div></div>
 </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="2072629753%2FFunctions%2F-1178245650" anchor-label="unaryMinus" id="2072629753%2FFunctions%2F-1178245650" data-filterable-set=":dokkaHtml/nativeMain"></a>
+                <div class="table-row" data-filterable-current=":dokkaHtml/nativeMain" data-filterable-set=":dokkaHtml/nativeMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="index.html#1903496308%2FFunctions%2F-1178245650">unaryMinus</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2072629753%2FFunctions%2F-1178245650"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/nativeMain" data-filterable-set=":dokkaHtml/nativeMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/nativeMain"><div class="symbol monospace">open operator fun <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/space.kscience.kmath.linear/-matrix/index.html">Matrix</a>&lt;<a href="index.html">T</a>&gt;.<a href="index.html#1903496308%2FFunctions%2F-1178245650">unaryMinus</a>(): <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/space.kscience.kmath.linear/-matrix/index.html">Matrix</a>&lt;<a href="index.html">T</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="symbol monospace">open operator fun <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/space.kscience.kmath.linear/-point/index.html">Point</a>&lt;<a href="index.html">T</a>&gt;.<a href="index.html#-2066634271%2FFunctions%2F-1178245650">unaryMinus</a>(): <a href="https://mipt-npm.github.io/kmath/kmath-core/kmath-core/space.kscience.kmath.linear/-point/index.html">Point</a>&lt;<a href="index.html">T</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h2 class="">Properties</h2>
+              <div class="table" data-togglable="Properties"><a data-name="1731633178%2FProperties%2F-1178245650" anchor-label="elementAlgebra" id="1731633178%2FProperties%2F-1178245650" data-filterable-set=":dokkaHtml/nativeMain"></a>
+                <div class="table-row" data-filterable-current=":dokkaHtml/nativeMain" data-filterable-set=":dokkaHtml/nativeMain">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="index.html#1731633178%2FProperties%2F-1178245650">elementAlgebra</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1731633178%2FProperties%2F-1178245650"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/nativeMain"><a data-name="1731633178%2FProperties%2F-1178245650" anchor-label="elementAlgebra" id="1731633178%2FProperties%2F-1178245650" data-filterable-set=":dokkaHtml/nativeMain"></a><div class="symbol monospace">abstract val <a href="index.html#1731633178%2FProperties%2F-1178245650">elementAlgebra</a>: <a href="index.html">A</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+                      </div>
                     </div>
                   </div>
                 </div>
