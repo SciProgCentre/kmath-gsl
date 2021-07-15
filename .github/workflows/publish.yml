@@ -40,8 +40,7 @@ jobs:
             ${{ runner.os }}-gradle-
       - if: matrix.os == 'ubuntu-20.04'
         run: >
-          ./gradlew release --no-daemon
-          -Ppublishing.enabled=true
+          ./gradlew release --no-daemon -Ppublishing.enabled=true
           -Ppublishing.github.user=${{ secrets.PUBLISHING_GITHUB_USER }}
           -Ppublishing.github.token=${{ secrets.PUBLISHING_GITHUB_TOKEN }}
           -Ppublishing.github=false
@@ -49,9 +48,7 @@ jobs:
           -Ppublishing.space.token=${{ secrets.PUBLISHING_SPACE_TOKEN }}
       - if: matrix.os == 'windows-latest'
         run: >
-          ./gradlew release --no-daemon
-          -Ppublishing.enabled=true
-          -Ppublishing.platform=mingwX64
+          ./gradlew release --no-daemon -Ppublishing.enabled=true -Ppublishing.platform=mingwX64
           -Ppublishing.github.user=${{ secrets.PUBLISHING_GITHUB_USER }}
           -Ppublishing.github.token=${{ secrets.PUBLISHING_GITHUB_TOKEN }}
           -Ppublishing.github=false
