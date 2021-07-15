@@ -14,7 +14,7 @@ plugins {
 }
 
 group = "space.kscience"
-version = "0.3.0-dev-2"
+version = "0.3.0-dev-3"
 
 repositories {
     mavenCentral()
@@ -140,13 +140,6 @@ kotlin {
 
     tasks[main.cinterops["libgsl"].interopProcessingTaskName].dependsOn(writeDefFile)
 
-    nativeTarget.binaries {
-        all {
-            optimized = false
-            debuggable = true
-        }
-    }
-
     targets.all {
         compilations.all {
             kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
@@ -178,9 +171,21 @@ afterEvaluate {
         dokkaSourceSets.all {
             val readmeFile = File(projectDir, "./README.md")
             if (readmeFile.exists()) includes.from(readmeFile)
-            externalDocumentationLink("https://mipt-npm.github.io/kmath/kmath-core/kmath-core/")
-            externalDocumentationLink("https://mipt-npm.github.io/kmath/kmath-memory/kmath-memory/")
-            externalDocumentationLink("https://mipt-npm.github.io/kmath/kmath-complex/kmath-complex/")
+
+            externalDocumentationLink(
+                "https://mipt-npm.github.io/kmath/kmath-core/",
+                "https://mipt-npm.github.io/kmath/kmath-core/kmath-core/package-list",
+            )
+
+            externalDocumentationLink(
+                "https://mipt-npm.github.io/kmath/kmath-memory/",
+                "https://mipt-npm.github.io/kmath/kmath-memory/kmath-memory/package-list",
+            )
+
+            externalDocumentationLink(
+                "https://mipt-npm.github.io/kmath/kmath-complex/",
+                "https://mipt-npm.github.io/kmath/kmath-complex/kmath-complex/package-list",
+            )
         }
     }
 }

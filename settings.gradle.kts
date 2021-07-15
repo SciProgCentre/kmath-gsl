@@ -11,7 +11,7 @@ pluginManagement {
         id("ru.mipt.npm.gradle.project") version toolsVersion
         id("ru.mipt.npm.gradle.common") version toolsVersion
         id("de.undercouch.download") version "4.1.2"
-        kotlin("multiplatform") version "1.5.20"
+        kotlin("multiplatform") version "1.5.21"
     }
 }
 
