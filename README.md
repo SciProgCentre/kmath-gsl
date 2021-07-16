@@ -13,7 +13,7 @@
 
 ## Artifact:
 
-The Maven coordinates of this project are `space.kscience:kmath-gsl:0.3.0-dev-2`.
+The Maven coordinates of this project are `space.kscience:kmath-gsl:0.3.0-dev-3`.
 
 **Gradle:**
 ```gradle
@@ -23,7 +23,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'space.kscience:kmath-gsl:0.3.0-dev-2'
+    implementation 'space.kscience:kmath-gsl:0.3.0-dev-3'
 }
 ```
 **Gradle Kotlin DSL:**
@@ -34,7 +34,7 @@ repositories {
 }
 
 dependencies {
-    implementation("space.kscience:kmath-gsl:0.3.0-dev-2")
+    implementation("space.kscience:kmath-gsl:0.3.0-dev-3")
 }
 ```
 

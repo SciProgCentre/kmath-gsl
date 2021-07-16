@@ -5,6 +5,7 @@ import org.jetbrains.dokka.gradle.DokkaTask
 import ru.mipt.npm.gradle.Maturity
 import space.kscience.kmath.gsl.codegen.matricesCodegen
 import space.kscience.kmath.gsl.codegen.vectorsCodegen
+import java.net.URL
 
 plugins {
     `maven-publish`
@@ -160,7 +161,7 @@ readme {
 }
 
 ksciencePublish {
-    vcs("https://github.com/mipt-npm/kmath-gsl")
+    vcs("https://github.com/mipt-npm/${rootProject.name}")
     space(publish = true)
 }
 
@@ -169,8 +170,18 @@ apiValidation.nonPublicMarkers.add("space.kscience.kmath.misc.UnstableKMathAPI")
 afterEvaluate {
     tasks.withType<DokkaTask> {
         dokkaSourceSets.all {
-            val readmeFile = File(projectDir, "./README.md")
+            val readmeFile = projectDir.resolve("README.md")
             if (readmeFile.exists()) includes.from(readmeFile)
+            val kotlinDirPath = "src/$name/kotlin"
+            val kotlinDir = file(kotlinDirPath)
+
+            if (kotlinDir.exists()) sourceLink {
+                localDirectory.set(kotlinDir)
+
+                remoteUrl.set(
+                    URL("https://github.com/mipt-npm/${rootProject.name}/tree/master/$kotlinDirPath")
+                )
+            }
 
             externalDocumentationLink(
                 "https://mipt-npm.github.io/kmath/kmath-core/",
