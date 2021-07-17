@@ -14,7 +14,6 @@ plugins {
     alias(libs.plugins.download)
     alias(kscienceLibs.plugins.gradle.project)
     alias(kscienceLibs.plugins.kotlin.multiplatform)
-    id("org.jetbrains.dokka") version "1.7.20"
 }
 
 group = "space.kscience"
@@ -33,6 +32,7 @@ kotlin {
     val nativeTargets = setOf(
         linuxX64(),
         mingwX64(),
+        macosX64(),
     )
 
     val downloadLinks = when (HostManager.hostOs()) {
@@ -41,6 +41,10 @@ kotlin {
         )
 
         "windows" -> DownloadLinks(gsl = null)
+
+        "osx" -> DownloadLinks(
+            gsl = "https://anaconda.org/conda-forge/gsl/2.7/download/osx-64/gsl-2.7-h93259b0_0.tar.bz2"
+        )
 
         else -> {
             logger.warn("Current OS cannot build any of kmath-gsl targets.")
@@ -87,6 +91,11 @@ kotlin {
                     staticLibraries.linux=libgsl.a libgslcblas.a
                     compilerOpts.linux=-I${thirdPartyDir}/include/
                     libraryPaths.linux=${thirdPartyDir}/lib/
+                    
+                    linkerOpts.osx=-L/opt/local/lib -L/usr/local/lib -lblas
+                    staticLibraries.osx=libgsl.a libgslcblas.a
+                    compilerOpts.osx=-I${thirdPartyDir}/include/
+                    libraryPaths.osx=${thirdPartyDir}/lib/
 
                     linkerOpts.mingw=-LC:/msys64/mingw64/lib/ -LC:/msys64/mingw64/bin/
                     staticLibraries.mingw=libgsl.a libgslcblas.a
@@ -113,7 +122,7 @@ kotlin {
 
         commonMain {
             dependencies {
-                api("space.kscience:kmath-complex:0.3.1-dev-5")
+                api("space.kscience:kmath-complex:0.3.0")
             }
         }
 

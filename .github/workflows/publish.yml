@@ -9,7 +9,7 @@ jobs:
   publish:
     strategy:
       matrix:
-        os: [ ubuntu-20.04, windows-2019 ]
+        os: [ ubuntu-20.04, windows-2019, macos-12 ]
     runs-on: ${{matrix.os}}
     steps:
       - uses: actions/checkout@v3
@@ -49,5 +49,12 @@ jobs:
         with:
           arguments: >
             releaseMingwX64 --build-cache --no-daemon -Ppublishing.enabled=true
+            -Ppublishing.space.user=${{ secrets.PUBLISHING_SPACE_USER }}
+            -Ppublishing.space.token=${{ secrets.PUBLISHING_SPACE_TOKEN }}
+      - if: matrix.os == 'macos-12'
+        uses: gradle/gradle-build-action@v2.3.3
+        with:
+          arguments: >
+            releaseMacosX64 --build-cache --no-daemon -Ppublishing.enabled=true
             -Ppublishing.space.user=${{ secrets.PUBLISHING_SPACE_USER }}
             -Ppublishing.space.token=${{ secrets.PUBLISHING_SPACE_TOKEN }}
