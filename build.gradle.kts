@@ -1,8 +1,8 @@
-@file:Suppress("UNUSED_VARIABLE")
-
 import de.undercouch.gradle.tasks.download.Download
 import org.jetbrains.dokka.gradle.DokkaTask
+import org.jetbrains.kotlin.gradle.tasks.AbstractKotlinNativeCompile
 import ru.mipt.npm.gradle.Maturity
+import org.jetbrains.kotlin.konan.target.HostManager
 import space.kscience.kmath.gsl.codegen.matricesCodegen
 import space.kscience.kmath.gsl.codegen.vectorsCodegen
 import java.net.URL
@@ -20,6 +20,7 @@ version = "0.3.0-dev-3"
 repositories {
     mavenCentral()
     maven("https://repo.kotlin.link")
+    maven("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev")
 }
 
 kotlin {
@@ -27,17 +28,14 @@ kotlin {
 
     data class DownloadLinks(val gsl: String?)
 
-    val osName = System.getProperty("os.name")
-    val isWindows = osName.startsWith("Windows")
+    val nativeTargets = setOf(linuxX64(), mingwX64())
 
-    val (nativeTarget, downloadLinks) = when {
-        osName == "Linux" -> linuxX64() to DownloadLinks(
+    val downloadLinks = when(HostManager.hostOs()) {
+        "linux" -> DownloadLinks(
             gsl = "https://anaconda.org/conda-forge/gsl/2.7/download/linux-64/gsl-2.7-he838d99_0.tar.bz2",
         )
 
-        isWindows -> mingwX64() to DownloadLinks(
-            gsl = null,
-        )
+        "windows" -> DownloadLinks(gsl = null)
 
         else -> {
             logger.warn("Current OS cannot build any of kmath-gsl targets.")
@@ -48,47 +46,6 @@ kotlin {
     val thirdPartyDir =
         File("${System.getProperty("user.home")}/.konan/third-party/kmath-gsl-${project.property("version")}")
 
-    val main by nativeTarget.compilations.getting
-
-    val test by nativeTarget.compilations.getting {
-        defaultSourceSet.dependsOn(main.defaultSourceSet)
-    }
-
-    val libgsl by main.cinterops.creating
-
-    sourceSets {
-        all {
-            with(languageSettings) {
-                progressiveMode = true
-                useExperimentalAnnotation("kotlin.time.ExperimentalTime")
-            }
-        }
-
-        commonMain {
-            dependencies {
-                api("space.kscience:kmath-complex:0.3.0-dev-12")
-            }
-        }
-
-        val nativeMain by creating {
-            val codegen by tasks.creating {
-                matricesCodegen(kotlin.srcDirs.first().absolutePath + "/_Matrices.kt")
-                vectorsCodegen(kotlin.srcDirs.first().absolutePath + "/_Vectors.kt")
-            }
-
-            kotlin.srcDirs(files().builtBy(codegen))
-            dependsOn(commonMain.get())
-        }
-
-        val nativeTest by creating {
-            dependsOn(nativeMain)
-            dependsOn(commonTest.get())
-        }
-
-        main.defaultSourceSet.dependsOn(nativeMain)
-        test.defaultSourceSet.dependsOn(nativeTest)
-    }
-
     val downloadGsl by tasks.creating(Download::class) {
         if (downloadLinks.gsl == null) {
             enabled = false
@@ -96,7 +53,7 @@ kotlin {
         }
 
         src(downloadLinks.gsl)
-        dest(File(thirdPartyDir, "libgsl.tar.bz2"))
+        dest(thirdPartyDir.resolve("libgsl.tar.bz2"))
         overwrite(false)
     }
 
@@ -112,7 +69,7 @@ kotlin {
     }
 
     val writeDefFile by tasks.creating {
-        val file = libgsl.defFile
+        val file = projectDir.resolve("src/nativeInterop/cinterop/libgsl.def")
         file.parentFile.mkdirs()
         if (!file.exists()) file.createNewFile()
 
@@ -141,11 +98,61 @@ kotlin {
         dependsOn(extractGsl)
     }
 
-    tasks[libgsl.interopProcessingTaskName].dependsOn(writeDefFile)
+    sourceSets {
+        all {
+            with(languageSettings) {
+                progressiveMode = true
+                useExperimentalAnnotation("kotlin.time.ExperimentalTime")
+            }
+        }
+
+        commonMain {
+            dependencies {
+                api("space.kscience:kmath-complex:0.3.0-dev-12")
+            }
+        }
+
+        val nativeMain by creating {
+            val codegen by tasks.creating {
+                matricesCodegen(kotlin.srcDirs.first().resolve("_Matrices.kt"))
+                vectorsCodegen(kotlin.srcDirs.first().resolve("_Vectors.kt"))
+            }
+
+            kotlin.srcDirs(files().builtBy(codegen))
+            dependsOn(commonMain.get())
+        }
+
+        val nativeTest by creating {
+            dependsOn(commonTest.get())
+        }
+
+        configure(nativeTargets) {
+            val main by compilations.getting
+            val test by compilations.getting
+            main.defaultSourceSet.dependsOn(nativeMain)
+            test.defaultSourceSet.dependsOn(nativeTest)
+            val libgsl by main.cinterops.creating
+            tasks[libgsl.interopProcessingTaskName].dependsOn(writeDefFile)
+        }
+    }
 
     targets.all {
         compilations.all {
             kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+        }
+    }
+}
+
+tasks {
+    withType<org.jetbrains.kotlin.gradle.tasks.CInteropProcess> {
+        onlyIf {
+            konanTarget == HostManager.host
+        }
+    }
+
+    withType<AbstractKotlinNativeCompile<*, *>> {
+        onlyIf {
+            compilation.konanTarget == HostManager.host
         }
     }
 }
