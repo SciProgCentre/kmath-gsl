@@ -37,7 +37,7 @@ private fun Appendable.createVectorClass(
 /**
  * Generates vectors source code for kmath-gsl.
  */
-fun vectorsCodegen(outputFile: String): Unit = File(outputFile).run {
+fun vectorsCodegen(outputFile: File): Unit = outputFile.run {
     parentFile.mkdirs()
 
     writer().use { w ->

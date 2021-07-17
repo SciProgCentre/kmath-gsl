@@ -63,7 +63,7 @@ private fun Appendable.createMatrixClass(
 /**
  * Generates matrices source code for kmath-gsl.
  */
-fun matricesCodegen(outputFile: String): Unit = File(outputFile).run {
+fun matricesCodegen(outputFile: File): Unit = outputFile.run {
     parentFile.mkdirs()
     writer().use {
         it.appendLine("package space.kscience.kmath.gsl")
