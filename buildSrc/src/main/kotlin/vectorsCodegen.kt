@@ -41,7 +41,7 @@ fun vectorsCodegen(outputFile: File): Unit = outputFile.run {
     parentFile.mkdirs()
 
     writer().use { w ->
-        w.appendLine("package space.kscience.kmath.gsl")
+        w.appendLine("package space.kscience.kmath.gsl.linear")
         w.appendLine()
         w.appendLine("import kotlinx.cinterop.*")
         w.appendLine("import org.gnu.gsl.*")

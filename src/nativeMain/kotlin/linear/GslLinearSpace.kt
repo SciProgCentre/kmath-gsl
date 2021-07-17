@@ -1,10 +1,11 @@
-package space.kscience.kmath.gsl
+package space.kscience.kmath.gsl.linear
 
 import kotlinx.cinterop.*
 import org.gnu.gsl.*
 import space.kscience.kmath.complex.Complex
 import space.kscience.kmath.complex.ComplexField
 import space.kscience.kmath.complex.toComplex
+import space.kscience.kmath.gsl.ensureHasGslErrorHandler
 import space.kscience.kmath.linear.*
 import space.kscience.kmath.misc.PerformancePitfall
 import space.kscience.kmath.misc.UnstableKMathAPI

@@ -1,8 +1,8 @@
 import de.undercouch.gradle.tasks.download.Download
 import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.tasks.AbstractKotlinNativeCompile
-import ru.mipt.npm.gradle.Maturity
 import org.jetbrains.kotlin.konan.target.HostManager
+import ru.mipt.npm.gradle.Maturity
 import space.kscience.kmath.gsl.codegen.matricesCodegen
 import space.kscience.kmath.gsl.codegen.vectorsCodegen
 import java.net.URL
@@ -30,7 +30,7 @@ kotlin {
 
     val nativeTargets = setOf(linuxX64(), mingwX64())
 
-    val downloadLinks = when(HostManager.hostOs()) {
+    val downloadLinks = when (HostManager.hostOs()) {
         "linux" -> DownloadLinks(
             gsl = "https://anaconda.org/conda-forge/gsl/2.7/download/linux-64/gsl-2.7-he838d99_0.tar.bz2",
         )
@@ -76,7 +76,7 @@ kotlin {
         file.writeText(
             """
                     package=org.gnu.gsl
-                    headers=gsl/gsl_blas.h gsl/gsl_linalg.h gsl/gsl_permute_matrix.h gsl/gsl_matrix.h gsl/gsl_vector.h gsl/gsl_errno.h
+                    headers=gsl/gsl_blas.h gsl/gsl_linalg.h gsl/gsl_permute_matrix.h gsl/gsl_matrix.h gsl/gsl_vector.h gsl/gsl_errno.h gsl/gsl_rng.h gsl/gsl_randist.h gsl/gsl_cdf.h stdint.h
 
                     linkerOpts.linux=-L/usr/lib64 -L/usr/lib/x86_64-linux-gnu -lblas
                     staticLibraries.linux=libgsl.a libgslcblas.a
@@ -92,6 +92,10 @@ kotlin {
                         return gsl_matrix_float_scale(a, x);
                     }
 
+                    inline void gsl_rng_set2(const gsl_rng * r, uint64_t seed) {
+                        gsl_rng_set(r, seed);
+                    }
+
                 """.trimIndent()
         )
 
@@ -102,20 +106,22 @@ kotlin {
         all {
             with(languageSettings) {
                 progressiveMode = true
-                useExperimentalAnnotation("kotlin.time.ExperimentalTime")
+                optIn("kotlin.time.ExperimentalTime")
+                optIn("kotlin.contracts.ExperimentalContracts")
             }
         }
 
         commonMain {
             dependencies {
-                api("space.kscience:kmath-complex:0.3.0-dev-12")
+                api("space.kscience:kmath-complex:0.3.0-dev-14")
+                api("space.kscience:kmath-stat:0.3.0-dev-14")
             }
         }
 
         val nativeMain by creating {
             val codegen by tasks.creating {
-                matricesCodegen(kotlin.srcDirs.first().resolve("_Matrices.kt"))
-                vectorsCodegen(kotlin.srcDirs.first().resolve("_Vectors.kt"))
+                matricesCodegen(kotlin.srcDirs.first().resolve("linear/_Matrices.kt"))
+                vectorsCodegen(kotlin.srcDirs.first().resolve("linear/_Vectors.kt"))
             }
 
             kotlin.srcDirs(files().builtBy(codegen))
@@ -205,6 +211,16 @@ afterEvaluate {
             externalDocumentationLink(
                 "https://mipt-npm.github.io/kmath/kmath-complex/",
                 "https://mipt-npm.github.io/kmath/kmath-complex/kmath-complex/package-list",
+            )
+
+            externalDocumentationLink(
+                "https://mipt-npm.github.io/kmath/kmath-state/",
+                "https://mipt-npm.github.io/kmath/kmath-stat/kmath-stat/package-list",
+            )
+
+            externalDocumentationLink(
+                "https://mipt-npm.github.io/kmath/kmath-coroutines/",
+                "https://mipt-npm.github.io/kmath/kmath-coroutines/kmath-coroutines/package-list",
             )
         }
     }

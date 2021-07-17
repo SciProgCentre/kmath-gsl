@@ -1,4 +1,4 @@
-package space.kscience.kmath.gsl
+package space.kscience.kmath.gsl.linear
 
 import kotlinx.cinterop.AutofreeScope
 import kotlinx.cinterop.CPointer
@@ -6,6 +6,7 @@ import kotlinx.cinterop.pointed
 import org.gnu.gsl.gsl_permutation
 import org.gnu.gsl.gsl_permutation_free
 import org.gnu.gsl.gsl_permutation_get
+import space.kscience.kmath.gsl.GslObject
 
 internal class GslPermutation(
     override val rawNativeHandle: CPointer<gsl_permutation>,

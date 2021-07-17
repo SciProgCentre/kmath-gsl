@@ -3,7 +3,6 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
         maven("https://repo.kotlin.link")
-        maven("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev")
     }
 
     plugins {

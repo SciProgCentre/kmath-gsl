@@ -1,4 +1,4 @@
-package space.kscience.kmath.gsl
+package space.kscience.kmath.gsl.linear
 
 import kotlinx.cinterop.*
 import org.gnu.gsl.*

@@ -1,5 +1,6 @@
 package space.kscience.kmath.gsl
 
+import space.kscience.kmath.gsl.linear.GslDoubleLinearSpace
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 

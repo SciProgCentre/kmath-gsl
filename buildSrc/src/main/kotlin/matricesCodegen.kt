@@ -66,7 +66,7 @@ private fun Appendable.createMatrixClass(
 fun matricesCodegen(outputFile: File): Unit = outputFile.run {
     parentFile.mkdirs()
     writer().use {
-        it.appendLine("package space.kscience.kmath.gsl")
+        it.appendLine("package space.kscience.kmath.gsl.linear")
         it.appendLine()
         it.appendLine("import kotlinx.cinterop.*")
         it.appendLine("import org.gnu.gsl.*")
