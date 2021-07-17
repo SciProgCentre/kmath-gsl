@@ -25,19 +25,6 @@ repositories {
 kotlin {
     explicitApi()
 
-    sourceSets.all {
-        with(languageSettings) {
-            progressiveMode = true
-            useExperimentalAnnotation("kotlin.time.ExperimentalTime")
-        }
-    }
-
-    sourceSets.commonMain {
-        dependencies {
-            api("space.kscience:kmath-complex:0.3.0-dev-12")
-        }
-    }
-
     data class DownloadLinks(val gsl: String?)
 
     val osName = System.getProperty("os.name")
@@ -69,23 +56,38 @@ kotlin {
 
     val libgsl by main.cinterops.creating
 
-    val nativeMain by sourceSets.creating {
-        val codegen by tasks.creating {
-            matricesCodegen(kotlin.srcDirs.first().absolutePath + "/_Matrices.kt")
-            vectorsCodegen(kotlin.srcDirs.first().absolutePath + "/_Vectors.kt")
+    sourceSets {
+        all {
+            with(languageSettings) {
+                progressiveMode = true
+                useExperimentalAnnotation("kotlin.time.ExperimentalTime")
+            }
         }
 
-        kotlin.srcDirs(files().builtBy(codegen))
-        dependsOn(sourceSets.commonMain.get())
-    }
+        commonMain {
+            dependencies {
+                api("space.kscience:kmath-complex:0.3.0-dev-12")
+            }
+        }
 
-    val nativeTest by sourceSets.creating {
-        dependsOn(nativeMain)
-        dependsOn(sourceSets.commonTest.get())
-    }
+        val nativeMain by creating {
+            val codegen by tasks.creating {
+                matricesCodegen(kotlin.srcDirs.first().absolutePath + "/_Matrices.kt")
+                vectorsCodegen(kotlin.srcDirs.first().absolutePath + "/_Vectors.kt")
+            }
 
-    main.defaultSourceSet.dependsOn(nativeMain)
-    test.defaultSourceSet.dependsOn(nativeTest)
+            kotlin.srcDirs(files().builtBy(codegen))
+            dependsOn(commonMain.get())
+        }
+
+        val nativeTest by creating {
+            dependsOn(nativeMain)
+            dependsOn(commonTest.get())
+        }
+
+        main.defaultSourceSet.dependsOn(nativeMain)
+        test.defaultSourceSet.dependsOn(nativeTest)
+    }
 
     val downloadGsl by tasks.creating(Download::class) {
         if (downloadLinks.gsl == null) {
@@ -139,7 +141,7 @@ kotlin {
         dependsOn(extractGsl)
     }
 
-    tasks[main.cinterops["libgsl"].interopProcessingTaskName].dependsOn(writeDefFile)
+    tasks[libgsl.interopProcessingTaskName].dependsOn(writeDefFile)
 
     targets.all {
         compilations.all {
