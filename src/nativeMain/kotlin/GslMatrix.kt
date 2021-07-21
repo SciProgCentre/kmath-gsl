@@ -15,7 +15,7 @@ public abstract class GslMatrix<T : Any, H : CStructVar> internal constructor(sc
     internal abstract fun copy(): GslMatrix<T, H>
 
     @OptIn(PerformancePitfall::class)
-    public override fun toString(): String = if (rowNum <= 5 && colNum <= 5)
+    override fun toString(): String = if (rowNum <= 5 && colNum <= 5)
         "Matrix(rowsNum = $rowNum, colNum = $colNum)\n" +
                 rows.joinToString(prefix = "(", postfix = ")", separator = "\n ") { buffer ->
                     buffer.asSequence().joinToString(separator = "\t") { it.toString() }
