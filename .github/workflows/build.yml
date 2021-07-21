@@ -2,8 +2,8 @@ name: Gradle build
 
 on:
   push:
+    branches: [ dev, master ]
   pull_request:
-    types: [opened, edited]
 
 jobs:
   build:

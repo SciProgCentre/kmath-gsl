@@ -35,7 +35,9 @@ internal inline fun <T : Any, A : Ring<T>, H : CStructVar> GslVector<T, H>.fill(
 /**
  * Represents matrix context implementing where all the operations are delegated to GSL.
  */
-public abstract class GslLinearSpace<T : Any, out A : Ring<T>, H1 : CStructVar, H2 : CStructVar> : LinearSpace<T, A> {
+public abstract class GslLinearSpace<T : Any, out A : Ring<T>, H1 : CStructVar, H2 : CStructVar> internal constructor(
+    internal val scope: AutofreeScope,
+) : AutofreeScope(), LinearSpace<T, A> {
     init {
         ensureHasGslErrorHandler()
     }
@@ -59,20 +61,23 @@ public abstract class GslLinearSpace<T : Any, out A : Ring<T>, H1 : CStructVar, 
     internal abstract fun produceDirtyMatrix(rows: Int, columns: Int): GslMatrix<T, H1>
     internal abstract fun produceDirtyVector(size: Int): GslVector<T, H2>
 
-    public override fun buildMatrix(rows: Int, columns: Int, initializer: A.(i: Int, j: Int) -> T): GslMatrix<T, H1> =
+    override fun buildMatrix(rows: Int, columns: Int, initializer: A.(i: Int, j: Int) -> T): GslMatrix<T, H1> =
         produceDirtyMatrix(rows, columns).fill(elementAlgebra, initializer)
 
-    public override fun buildVector(size: Int, initializer: A.(Int) -> T): GslVector<T, H2> =
+    override fun buildVector(size: Int, initializer: A.(Int) -> T): GslVector<T, H2> =
         produceDirtyVector(size).fill(elementAlgebra, initializer)
+
+    override fun alloc(size: Long, align: Int): NativePointed = scope.alloc(size, align)
+    override fun alloc(size: Int, align: Int): NativePointed = scope.alloc(size, align)
 }
 
 /**
  * Represents [Double] matrix context implementing where all the operations are delegated to GSL.
  */
 @Suppress("OVERRIDE_BY_INLINE")
-public class GslDoubleLinearSpace(internal val scope: AutofreeScope) :
-    GslLinearSpace<Double, DoubleField, gsl_matrix, gsl_vector>() {
-    public override inline val elementAlgebra: DoubleField
+public class GslDoubleLinearSpace(scope: AutofreeScope) :
+    GslLinearSpace<Double, DoubleField, gsl_matrix, gsl_vector>(scope) {
+    override inline val elementAlgebra: DoubleField
         get() = DoubleField
 
     override fun produceDirtyMatrix(rows: Int, columns: Int): GslMatrix<Double, gsl_matrix> = GslDoubleMatrix(
@@ -84,7 +89,7 @@ public class GslDoubleLinearSpace(internal val scope: AutofreeScope) :
     override fun produceDirtyVector(size: Int): GslVector<Double, gsl_vector> =
         GslDoubleVector(rawNativeHandle = checkNotNull(gsl_vector_alloc(size.toULong())), scope = scope, owned = true)
 
-    public override fun Matrix<Double>.dot(other: Matrix<Double>): GslMatrix<Double, gsl_matrix> {
+    override fun Matrix<Double>.dot(other: Matrix<Double>): GslMatrix<Double, gsl_matrix> {
         val x = toGsl().nativeHandle
         val a = other.toGsl().nativeHandle
         val result = checkNotNull(gsl_matrix_calloc(a.pointed.size1, a.pointed.size2))
@@ -92,7 +97,7 @@ public class GslDoubleLinearSpace(internal val scope: AutofreeScope) :
         return GslDoubleMatrix(rawNativeHandle = result, scope = scope, owned = true)
     }
 
-    public override fun Matrix<Double>.dot(vector: Point<Double>): GslVector<Double, gsl_vector> {
+    override fun Matrix<Double>.dot(vector: Point<Double>): GslVector<Double, gsl_vector> {
         val x = toGsl().nativeHandle
         val a = vector.toGsl().nativeHandle
         val result = checkNotNull(gsl_vector_calloc(a.pointed.size))
@@ -100,19 +105,19 @@ public class GslDoubleLinearSpace(internal val scope: AutofreeScope) :
         return GslDoubleVector(rawNativeHandle = result, scope = scope, owned = true)
     }
 
-    public override fun Matrix<Double>.times(value: Double): GslMatrix<Double, gsl_matrix> {
+    override fun Matrix<Double>.times(value: Double): GslMatrix<Double, gsl_matrix> {
         val g1 = toGsl().copy()
         gsl_matrix_scale(g1.nativeHandle, value)
         return g1
     }
 
-    public override fun Matrix<Double>.plus(other: Matrix<Double>): GslMatrix<Double, gsl_matrix> {
+    override fun Matrix<Double>.plus(other: Matrix<Double>): GslMatrix<Double, gsl_matrix> {
         val g1 = toGsl().copy()
         gsl_matrix_add(g1.nativeHandle, other.toGsl().nativeHandle)
         return g1
     }
 
-    public override fun Matrix<Double>.minus(other: Matrix<Double>): Matrix<Double> {
+    override fun Matrix<Double>.minus(other: Matrix<Double>): Matrix<Double> {
         val g1 = toGsl().copy()
         gsl_matrix_sub(g1.nativeHandle, other.toGsl().nativeHandle)
         return g1
@@ -121,7 +126,7 @@ public class GslDoubleLinearSpace(internal val scope: AutofreeScope) :
     @OptIn(PerformancePitfall::class)
     @Suppress("IMPLICIT_CAST_TO_ANY")
     @UnstableKMathAPI
-    public override fun <F : StructureFeature> getFeature(structure: Matrix<Double>, type: KClass<out F>): F? =
+    override fun <F : StructureFeature> getFeature(structure: Matrix<Double>, type: KClass<out F>): F? =
         when (type) {
             LupDecompositionFeature::class, DeterminantFeature::class -> object : LupDecompositionFeature<Double>,
                 DeterminantFeature<Double>, InverseMatrixFeature<Double> {
@@ -227,9 +232,9 @@ public fun <R> GslDoubleLinearSpace(block: GslDoubleLinearSpace.() -> R): R =
 /**
  * Represents [Float] matrix context implementing where all the operations are delegated to GSL.
  */
-public class GslFloatLinearSpace(private val scope: AutofreeScope) :
-    GslLinearSpace<Float, FloatField, gsl_matrix_float, gsl_vector_float>() {
-    public override val elementAlgebra: FloatField
+public class GslFloatLinearSpace(scope: AutofreeScope) :
+    GslLinearSpace<Float, FloatField, gsl_matrix_float, gsl_vector_float>(scope) {
+    override val elementAlgebra: FloatField
         get() = FloatField
 
     override fun produceDirtyMatrix(rows: Int, columns: Int): GslMatrix<Float, gsl_matrix_float> =
@@ -245,7 +250,7 @@ public class GslFloatLinearSpace(private val scope: AutofreeScope) :
         owned = true,
     )
 
-    public override fun Matrix<Float>.dot(other: Matrix<Float>): GslMatrix<Float, gsl_matrix_float> {
+    override fun Matrix<Float>.dot(other: Matrix<Float>): GslMatrix<Float, gsl_matrix_float> {
         val x = toGsl().nativeHandle
         val a = other.toGsl().nativeHandle
         val result = checkNotNull(gsl_matrix_float_calloc(a.pointed.size1, a.pointed.size2))
@@ -253,7 +258,7 @@ public class GslFloatLinearSpace(private val scope: AutofreeScope) :
         return GslFloatMatrix(rawNativeHandle = result, scope = scope, owned = true)
     }
 
-    public override fun Matrix<Float>.dot(vector: Point<Float>): GslVector<Float, gsl_vector_float> {
+    override fun Matrix<Float>.dot(vector: Point<Float>): GslVector<Float, gsl_vector_float> {
         val x = toGsl().nativeHandle
         val a = vector.toGsl().nativeHandle
         val result = checkNotNull(gsl_vector_float_calloc(a.pointed.size))
@@ -261,19 +266,19 @@ public class GslFloatLinearSpace(private val scope: AutofreeScope) :
         return GslFloatVector(rawNativeHandle = result, scope = scope, owned = true)
     }
 
-    public override fun Matrix<Float>.times(value: Float): GslMatrix<Float, gsl_matrix_float> {
+    override fun Matrix<Float>.times(value: Float): GslMatrix<Float, gsl_matrix_float> {
         val g1 = toGsl().copy()
         gsl_matrix_float_scale2(g1.nativeHandle, value)
         return g1
     }
 
-    public override fun Matrix<Float>.plus(other: Matrix<Float>): GslMatrix<Float, gsl_matrix_float> {
+    override fun Matrix<Float>.plus(other: Matrix<Float>): GslMatrix<Float, gsl_matrix_float> {
         val g1 = toGsl().copy()
         gsl_matrix_float_add(g1.nativeHandle, other.toGsl().nativeHandle)
         return g1
     }
 
-    public override fun Matrix<Float>.minus(other: Matrix<Float>): Matrix<Float> {
+    override fun Matrix<Float>.minus(other: Matrix<Float>): Matrix<Float> {
         val g1 = toGsl().copy()
         gsl_matrix_float_sub(g1.nativeHandle, other.toGsl().nativeHandle)
         return g1
@@ -290,9 +295,9 @@ public fun <R> GslFloatLinearSpace(block: GslFloatLinearSpace.() -> R): R =
  * Represents [Complex] matrix context implementing where all the operations are delegated to GSL.
  */
 @Suppress("OVERRIDE_BY_INLINE")
-public class GslComplexLinearSpace(internal val scope: AutofreeScope) :
-    GslLinearSpace<Complex, ComplexField, gsl_matrix_complex, gsl_vector_complex>() {
-    public override inline val elementAlgebra: ComplexField
+public class GslComplexLinearSpace(scope: AutofreeScope) :
+    GslLinearSpace<Complex, ComplexField, gsl_matrix_complex, gsl_vector_complex>(scope) {
+    override inline val elementAlgebra: ComplexField
         get() = ComplexField
 
     override fun produceDirtyMatrix(rows: Int, columns: Int): GslMatrix<Complex, gsl_matrix_complex> = GslComplexMatrix(
@@ -308,7 +313,7 @@ public class GslComplexLinearSpace(internal val scope: AutofreeScope) :
             owned = true,
         )
 
-    public override fun Matrix<Complex>.dot(other: Matrix<Complex>): GslMatrix<Complex, gsl_matrix_complex> {
+    override fun Matrix<Complex>.dot(other: Matrix<Complex>): GslMatrix<Complex, gsl_matrix_complex> {
         val x = toGsl().nativeHandle
         val a = other.toGsl().nativeHandle
         val result = checkNotNull(gsl_matrix_complex_calloc(a.pointed.size1, a.pointed.size2))
@@ -316,7 +321,7 @@ public class GslComplexLinearSpace(internal val scope: AutofreeScope) :
         return GslComplexMatrix(rawNativeHandle = result, scope = scope, owned = true)
     }
 
-    public override fun Matrix<Complex>.dot(vector: Point<Complex>): GslVector<Complex, gsl_vector_complex> {
+    override fun Matrix<Complex>.dot(vector: Point<Complex>): GslVector<Complex, gsl_vector_complex> {
         val x = toGsl().nativeHandle
         val a = vector.toGsl().nativeHandle
         val result = checkNotNull(gsl_vector_complex_calloc(a.pointed.size))
@@ -324,19 +329,19 @@ public class GslComplexLinearSpace(internal val scope: AutofreeScope) :
         return GslComplexVector(rawNativeHandle = result, scope = scope, owned = true)
     }
 
-    public override fun Matrix<Complex>.times(value: Complex): GslMatrix<Complex, gsl_matrix_complex> {
+    override fun Matrix<Complex>.times(value: Complex): GslMatrix<Complex, gsl_matrix_complex> {
         val g1 = toGsl().copy()
         gsl_matrix_complex_scale(g1.nativeHandle, value.toGsl())
         return g1
     }
 
-    public override fun Matrix<Complex>.plus(other: Matrix<Complex>): GslMatrix<Complex, gsl_matrix_complex> {
+    override fun Matrix<Complex>.plus(other: Matrix<Complex>): GslMatrix<Complex, gsl_matrix_complex> {
         val g1 = toGsl().copy()
         gsl_matrix_complex_add(g1.nativeHandle, other.toGsl().nativeHandle)
         return g1
     }
 
-    public override fun Matrix<Complex>.minus(other: Matrix<Complex>): Matrix<Complex> {
+    override fun Matrix<Complex>.minus(other: Matrix<Complex>): Matrix<Complex> {
         val g1 = toGsl().copy()
         gsl_matrix_complex_sub(g1.nativeHandle, other.toGsl().nativeHandle)
         return g1
@@ -345,7 +350,7 @@ public class GslComplexLinearSpace(internal val scope: AutofreeScope) :
     @OptIn(PerformancePitfall::class)
     @Suppress("IMPLICIT_CAST_TO_ANY")
     @UnstableKMathAPI
-    public override fun <F : StructureFeature> getFeature(structure: Matrix<Complex>, type: KClass<out F>): F? =
+    override fun <F : StructureFeature> getFeature(structure: Matrix<Complex>, type: KClass<out F>): F? =
         when (type) {
             LupDecompositionFeature::class, DeterminantFeature::class -> object : LupDecompositionFeature<Complex>,
                 DeterminantFeature<Complex>, InverseMatrixFeature<Complex> {
