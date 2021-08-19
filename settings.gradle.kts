@@ -9,7 +9,7 @@ pluginManagement {
     plugins {
         id("ru.mipt.npm.gradle.project") version "0.10.2-fixrelease-1"
         id("de.undercouch.download") version "4.1.2"
-        kotlin("multiplatform") version "1.5.30-RC-161"
+        kotlin("multiplatform") version "1.5.30-RC"
     }
 }
 
