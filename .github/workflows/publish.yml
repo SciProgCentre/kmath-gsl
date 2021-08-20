@@ -9,21 +9,21 @@ jobs:
   publish:
     strategy:
       matrix:
-        os: [ ubuntu-20.04, windows-latest ]
+        os: [ ubuntu-latest, windows-2019 ]
     runs-on: ${{matrix.os}}
     steps:
       - uses: actions/checkout@v2
       - uses: DeLaGuardo/setup-graalvm@4.0
         with:
-          graalvm: 21.1.0
+          graalvm: 21.2.0
           java: java11
           arch: amd64
-      - if: matrix.os == 'windows-latest'
+      - if: matrix.os == 'windows-2019'
         uses: msys2/setup-msys2@v2
         with:
           release: false
           path-type: inherit
-      - if: matrix.os == 'windows-latest'
+      - if: matrix.os == 'windows-2019'
         shell: msys2 {0}
         run: pacman --noconfirm -S mingw-w64-x86_64-gsl
       - uses: actions/cache@v2
@@ -40,15 +40,15 @@ jobs:
             ${{ runner.os }}-gradle-
       - if: matrix.os == 'ubuntu-20.04'
         run: >
-          ./gradlew release --no-daemon -Ppublishing.enabled=true
+          ./gradlew release --build-cache --no-daemon -Ppublishing.enabled=true
           -Ppublishing.github.user=${{ secrets.PUBLISHING_GITHUB_USER }}
           -Ppublishing.github.token=${{ secrets.PUBLISHING_GITHUB_TOKEN }}
           -Ppublishing.github=false
           -Ppublishing.space.user=${{ secrets.PUBLISHING_SPACE_USER }}
           -Ppublishing.space.token=${{ secrets.PUBLISHING_SPACE_TOKEN }}
-      - if: matrix.os == 'windows-latest'
+      - if: matrix.os == 'windows-2019'
         shell: cmd
         run: >
-          gradlew release --no-daemon -Ppublishing.enabled=true -Ppublishing.platform=mingwX64
+          gradlew release --build-cache --no-daemon -Ppublishing.enabled=true -Ppublishing.platform=mingwX64
           -Ppublishing.space.user=${{ secrets.PUBLISHING_SPACE_USER }}
           -Ppublishing.space.token=${{ secrets.PUBLISHING_SPACE_TOKEN }}

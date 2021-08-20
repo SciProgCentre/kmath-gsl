@@ -9,21 +9,22 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ ubuntu-20.04, windows-latest ]
+        os: [ ubuntu-20.04, windows-2019 ]
     runs-on: ${{matrix.os}}
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v2
       - uses: DeLaGuardo/setup-graalvm@4.0
         with:
-          graalvm: 21.1.0
+          graalvm: 21.2.0
           java: java11
           arch: amd64
-      - if: matrix.os == 'windows-latest'
+      - if: matrix.os == 'windows-2019'
         uses: msys2/setup-msys2@v2
         with:
           release: false
           path-type: inherit
-      - if: matrix.os == 'windows-latest'
+      - if: matrix.os == 'windows-2019'
         shell: msys2 {0}
         run: pacman --noconfirm -S mingw-w64-x86_64-gsl
       - uses: actions/cache@v2
@@ -38,4 +39,4 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('*.gradle.kts') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-      - run: ./gradlew build --no-daemon --stacktrace
+      - run: ./gradlew build --build-cache --no-daemon --stacktrace
