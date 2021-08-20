@@ -1,7 +1,8 @@
-package space.kscience.kmath.gsl
+package space.kscience.kmath.gsl.linear
 
 import kotlinx.cinterop.AutofreeScope
 import kotlinx.cinterop.CStructVar
+import space.kscience.kmath.gsl.GslObject
 import space.kscience.kmath.linear.Matrix
 import space.kscience.kmath.misc.PerformancePitfall
 import space.kscience.kmath.structures.asSequence

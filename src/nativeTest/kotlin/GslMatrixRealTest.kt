@@ -1,5 +1,6 @@
 package space.kscience.kmath.gsl
 
+import space.kscience.kmath.gsl.linear.GslDoubleLinearSpace
 import space.kscience.kmath.misc.PerformancePitfall
 import space.kscience.kmath.structures.toList
 import kotlin.test.Test

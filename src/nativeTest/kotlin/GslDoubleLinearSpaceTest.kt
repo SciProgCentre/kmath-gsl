@@ -1,5 +1,6 @@
 package space.kscience.kmath.gsl
 
+import space.kscience.kmath.gsl.linear.GslDoubleLinearSpace
 import space.kscience.kmath.linear.LinearSpace
 import space.kscience.kmath.linear.Matrix
 import space.kscience.kmath.linear.invoke
