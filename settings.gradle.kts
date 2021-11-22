@@ -1,15 +1,23 @@
-pluginManagement {
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+enableFeaturePreview("VERSION_CATALOGS")
+
+pluginManagement.repositories {
+    maven("https://repo.kotlin.link")
+    mavenCentral()
+    mavenLocal()
+    gradlePluginPortal()
+}
+
+dependencyResolutionManagement {
     repositories {
-        mavenCentral()
-        gradlePluginPortal()
         maven("https://repo.kotlin.link")
-        maven("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev")
+        mavenCentral()
+        mavenLocal()
+        gradlePluginPortal()
     }
 
-    plugins {
-        id("ru.mipt.npm.gradle.project") version "0.10.2-fixrelease-1"
-        id("de.undercouch.download") version "4.1.2"
-        kotlin("multiplatform") version "1.5.30-RC"
+    versionCatalogs.create("miptNpm") {
+        from("ru.mipt.npm:version-catalog:0.10.7")
     }
 }
 
