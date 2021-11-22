@@ -70,15 +70,20 @@ private fun Appendable.createMatrixClass(
  */
 fun matricesCodegen(outputFile: File): Unit = outputFile.run {
     parentFile.mkdirs()
-    writer().use {
-        it.appendLine("package space.kscience.kmath.gsl")
-        it.appendLine()
-        it.appendLine("import kotlinx.cinterop.*")
-        it.appendLine("import org.gnu.gsl.*")
-        it.appendLine("import space.kscience.kmath.misc.PerformancePitfall")
-        it.appendLine("import space.kscience.kmath.structures.*")
-        it.appendLine()
-        it.createMatrixClass("double", "Double")
-        it.createMatrixClass("float", "Float")
+    writer().use { w ->
+        w.appendLine("/*")
+        w.appendLine(" * Copyright 2021 KMath contributors.")
+        w.appendLine(" * Use of this source code is governed by the GNU GPL v3 license that can be found in the license/LICENSE.txt file.")
+        w.appendLine(" */")
+        w.appendLine()
+        w.appendLine("package space.kscience.kmath.gsl")
+        w.appendLine()
+        w.appendLine("import kotlinx.cinterop.*")
+        w.appendLine("import org.gnu.gsl.*")
+        w.appendLine("import space.kscience.kmath.misc.PerformancePitfall")
+        w.appendLine("import space.kscience.kmath.structures.*")
+        w.appendLine()
+        w.createMatrixClass("double", "Double")
+        w.createMatrixClass("float", "Float")
     }
 }
