@@ -1,3 +1,8 @@
+/*
+ * Copyright 2021 KMath contributors.
+ * Use of this source code is governed by the GNU GPL v3 license that can be found in the license/LICENSE.txt file.
+ */
+
 package space.kscience.kmath.gsl
 
 import space.kscience.kmath.linear.LinearSpace
