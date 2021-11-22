@@ -171,7 +171,7 @@ readme {
 }
 
 ksciencePublish {
-    github(rootProject.name)
+    github(rootProject.name, publish = false)
     space(release = true)
 }
 
