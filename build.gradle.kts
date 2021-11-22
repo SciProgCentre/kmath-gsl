@@ -16,7 +16,7 @@ plugins {
 }
 
 group = "space.kscience"
-version = "0.3.0-dev-3"
+version = "0.3.0-dev-4"
 
 repositories {
     mavenCentral()
@@ -31,7 +31,7 @@ kotlin {
 
     val nativeTargets = setOf(linuxX64(), mingwX64())
 
-    val downloadLinks = when(HostManager.hostOs()) {
+    val downloadLinks = when (HostManager.hostOs()) {
         "linux" -> DownloadLinks(
             gsl = "https://anaconda.org/conda-forge/gsl/2.7/download/linux-64/gsl-2.7-he838d99_0.tar.bz2",
         )
@@ -171,14 +171,15 @@ readme {
 }
 
 ksciencePublish {
-    github("https://github.com/mipt-npm/kmath-gsl")
-    space()
+    github(rootProject.name)
+    space(release = true)
 }
 
 apiValidation.nonPublicMarkers.add("space.kscience.kmath.misc.UnstableKMathAPI")
 
 afterEvaluate {
     tasks.withType<DokkaTask> {
+        println(dokkaSourceSets.toList())
         dokkaSourceSets.all {
             val readmeFile = projectDir.resolve("README.md")
             if (readmeFile.exists()) includes.from(readmeFile)
