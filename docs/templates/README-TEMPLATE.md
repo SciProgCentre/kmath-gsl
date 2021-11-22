@@ -17,8 +17,8 @@ ${artifact}
 On Linux, final binaries using `kmath-gsl` need a BLAS implementation installed (because of dynamic linking
 to `libblas`). To achieve better performance, MKL or ATLAS can be used.
 
-On Windows, default CBLAS provided by GSL is linked statically. Windows builds also
-require [MSYS2](https://www.msys2.org/) installed and added to Path (uncomment the `MSYS2_PATH_TYPE=inherit` line in
+On Windows, default CBLAS provided by GSL is linked statically. To build the kmath-gsl itself on Windows it is required
+to have [MSYS2](https://www.msys2.org/) installed and added to Path (uncomment the `MSYS2_PATH_TYPE=inherit` line in
 mingw64.ini) and GSL installed manually in the MSYS shell:
 
 ```shell
