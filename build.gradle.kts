@@ -1,6 +1,7 @@
 import de.undercouch.gradle.tasks.download.Download
 import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.tasks.AbstractKotlinNativeCompile
+import org.jetbrains.kotlin.gradle.tasks.CInteropProcess
 import ru.mipt.npm.gradle.Maturity
 import org.jetbrains.kotlin.konan.target.HostManager
 import space.kscience.kmath.gsl.codegen.matricesCodegen
@@ -144,7 +145,7 @@ kotlin {
 }
 
 tasks {
-    withType<org.jetbrains.kotlin.gradle.tasks.CInteropProcess> {
+    withType<CInteropProcess> {
         onlyIf {
             konanTarget == HostManager.host
         }
