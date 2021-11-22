@@ -14,10 +14,18 @@ ${artifact}
 
 ## Additional requirements
 
-On Linux, final binaries using `kmath-gsl` need a BLAS implementation installed (because of dynamic linking to `libblas`). To achieve better performance, MKL or ATLAS can be used.
+On Linux, final binaries using `kmath-gsl` need a BLAS implementation installed (because of dynamic linking
+to `libblas`). To achieve better performance, MKL or ATLAS can be used.
 
-On Windows, default CBLAS provided by GSL is linked statically.
+On Windows, default CBLAS provided by GSL is linked statically. Windows builds also
+require [MSYS2](https://www.msys2.org/) installed and added to Path (uncomment the `MSYS2_PATH_TYPE=inherit` line in
+mingw64.ini) and GSL installed manually in the MSYS shell:
+
+```shell
+pacman --noconfirm -S mingw-w64-x86_64-gsl
+```
 
 ## Multiplatform support
 
-Currently, only `linuxX64` and `mingwX64` targets are supported. Planned platforms are `macosX64`, and `jvm` (with [JEP-389](https://openjdk.java.net/jeps/389)).
+Currently, only `linuxX64` and `mingwX64` Kotlin targets are supported. It is also planned to support `macosX64`,
+and `jvm` (with [JEP-389](https://openjdk.java.net/jeps/389)).

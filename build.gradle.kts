@@ -9,9 +9,9 @@ import java.net.URL
 
 plugins {
     `maven-publish`
-    kotlin("multiplatform")
-    id("ru.mipt.npm.gradle.project")
-    id("de.undercouch.download")
+    alias(libs.plugins.download)
+    alias(miptNpm.plugins.gradle.project)
+    alias(miptNpm.plugins.kotlin.multiplatform)
 }
 
 group = "space.kscience"
@@ -102,7 +102,7 @@ kotlin {
         all {
             with(languageSettings) {
                 progressiveMode = true
-                useExperimentalAnnotation("kotlin.time.ExperimentalTime")
+                optIn("kotlin.time.ExperimentalTime")
             }
         }
 
@@ -170,8 +170,8 @@ readme {
 }
 
 ksciencePublish {
-    vcs("https://github.com/mipt-npm/${rootProject.name}")
-    space(publish = true)
+    github("https://github.com/mipt-npm/kmath-gsl")
+    space()
 }
 
 apiValidation.nonPublicMarkers.add("space.kscience.kmath.misc.UnstableKMathAPI")
