@@ -13,12 +13,11 @@ jobs:
     runs-on: ${{matrix.os}}
     timeout-minutes: 40
     steps:
-      - uses: actions/checkout@v2
-      - uses: DeLaGuardo/setup-graalvm@4.0
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
         with:
-          graalvm: 21.3.0
-          java: java11
-          arch: amd64
+          java-version: 11
+          distribution: liberica
       - if: matrix.os == 'windows-2019'
         uses: msys2/setup-msys2@v2
         with:
@@ -27,16 +26,15 @@ jobs:
       - if: matrix.os == 'windows-2019'
         shell: msys2 {0}
         run: pacman --noconfirm -S mingw-w64-x86_64-gsl
-      - uses: actions/cache@v2
-        with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('*.gradle.kts') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-      - uses: actions/cache@v2
+      - name: Cache konan
+        uses: actions/cache@v3
         with:
           path: ~/.konan
           key: ${{ runner.os }}-gradle-${{ hashFiles('*.gradle.kts') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-      - run: ./gradlew build --build-cache --no-daemon --stacktrace
+      - name: Gradle Wrapper Validation
+        uses: gradle/wrapper-validation-action@v1.0.4
+      - uses: gradle/gradle-build-action@v2.3.3
+        with:
+          arguments: build

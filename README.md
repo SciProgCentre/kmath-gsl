@@ -1,40 +1,39 @@
 # Module kmath-gsl
 
-[![JetBrains Research](https://jb.gg/badges/research.svg)](https://confluence.jetbrains.com/display/ALL/JetBrains+on+GitHub)
-[![Gradle build](https://github.com/mipt-npm/kmath-gsl/workflows/build/badge.svg)](https://github.com/mipt-npm/kmath-gsl/actions/workflows/build.yml)
+[![Gradle build](https://github.com/SciProgCenter/kmath-gsl/workflows/build/badge.svg)](https://github.com/mipt-npm/kmath-gsl/actions/workflows/build.yml)
 [![Space](https://img.shields.io/badge/dynamic/xml?color=orange&label=Space&query=//metadata/versioning/latest&url=https%3A%2F%2Fmaven.pkg.jetbrains.space%2Fmipt-npm%2Fp%2Fsci%2Fmaven%2Fspace%2Fkscience%2Fkmath-gsl%2Fmaven-metadata.xml)](https://maven.pkg.jetbrains.space/mipt-npm/p/sci/maven/space/kscience/)
 
-[KMath](https://github.com/mipt-npm/kmath) extension adding GNU Scientific Library based linear algebra implementation.
+[KMath](https://github.com/SciProgCenter/kmath) extension adding GNU Scientific Library based linear algebra implementation.
 
-[Documentation site](https://mipt-npm.github.io/kmath-gsl/)
+[Documentation site](https://sciprogcenter.github.io/kmath-gsl/)
 
  - [matrix-contexts](src/nativeMain/kotlin/GslLinearSpace.kt) : LinearSpace implementations for Double, Float, and Complex matrices and vectors implemented with GSL
 
 
 ## Artifact:
 
-The Maven coordinates of this project are `space.kscience:kmath-gsl:0.3.0-dev-4`.
+The Maven coordinates of this project are `space.kscience:kmath-gsl:0.3.0-dev-5`.
 
-**Gradle:**
-```gradle
+**Gradle Groovy:**
+```groovy
 repositories {
-    mavenCentral()
     maven { url 'https://repo.kotlin.link' }
+    mavenCentral()
 }
 
 dependencies {
-    implementation 'space.kscience:kmath-gsl:0.3.0-dev-4'
+    implementation 'space.kscience:kmath-gsl:0.3.0-dev-5'
 }
 ```
 **Gradle Kotlin DSL:**
 ```kotlin
 repositories {
-    mavenCentral()
     maven("https://repo.kotlin.link")
+    mavenCentral()
 }
 
 dependencies {
-    implementation("space.kscience:kmath-gsl:0.3.0-dev-4")
+    implementation("space.kscience:kmath-gsl:0.3.0-dev-5")
 }
 ```
 

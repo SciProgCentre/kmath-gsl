@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 KMath contributors.
+ * Copyright 2021-2022 KMath contributors.
  * Use of this source code is governed by the GNU GPL v3 license that can be found in the license/LICENSE.txt file.
  */
 
@@ -8,6 +8,8 @@ package space.kscience.kmath.gsl
 import kotlinx.cinterop.AutofreeScope
 import kotlinx.cinterop.CStructVar
 import space.kscience.kmath.linear.Point
+import space.kscience.kmath.nd.StructureND
+import space.kscience.kmath.structures.Buffer
 
 /**
  * Wraps gsl_vector_* objects from GSL.
@@ -27,4 +29,6 @@ public abstract class GslVector<T, H : CStructVar> internal constructor(scope: A
             return this@GslVector[cursor - 1]
         }
     }
+
+    override fun toString(): String = Buffer.toString(this)
 }

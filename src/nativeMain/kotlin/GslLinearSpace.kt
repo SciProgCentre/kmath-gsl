@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 KMath contributors.
+ * Copyright 2021-2022 KMath contributors.
  * Use of this source code is governed by the GNU GPL v3 license that can be found in the license/LICENSE.txt file.
  */
 
@@ -79,10 +79,9 @@ public abstract class GslLinearSpace<T : Any, out A : Ring<T>, H1 : CStructVar, 
 /**
  * Represents [Double] matrix context implementing where all the operations are delegated to GSL.
  */
-@Suppress("OVERRIDE_BY_INLINE")
 public class GslDoubleLinearSpace(scope: AutofreeScope) :
     GslLinearSpace<Double, DoubleField, gsl_matrix, gsl_vector>(scope) {
-    override inline val elementAlgebra: DoubleField
+    override val elementAlgebra: DoubleField
         get() = DoubleField
 
     override fun produceDirtyMatrix(rows: Int, columns: Int): GslMatrix<Double, gsl_matrix> = GslDoubleMatrix(
@@ -129,9 +128,8 @@ public class GslDoubleLinearSpace(scope: AutofreeScope) :
     }
 
     @OptIn(PerformancePitfall::class)
-    @Suppress("IMPLICIT_CAST_TO_ANY")
     @UnstableKMathAPI
-    override fun <F : StructureFeature> getFeature(structure: Matrix<Double>, type: KClass<out F>): F? =
+    override fun <F : StructureFeature> computeFeature(structure: Matrix<Double>, type: KClass<out F>): F? =
         when (type) {
             LupDecompositionFeature::class, DeterminantFeature::class -> object : LupDecompositionFeature<Double>,
                 DeterminantFeature<Double>, InverseMatrixFeature<Double> {
@@ -174,14 +172,14 @@ public class GslDoubleLinearSpace(scope: AutofreeScope) :
                             j == i -> 1.0
                             else -> 0.0
                         }
-                    } + LFeature
+                    }.withFeature(LFeature)
                 }
 
                 override val u by lazy {
                     VirtualMatrix(
                         lups.first.shape[0],
                         lups.first.shape[1],
-                    ) { i, j -> if (j >= i) lups.first[i, j] else 0.0 } + UFeature
+                    ) { i, j -> if (j >= i) lups.first[i, j] else 0.0 }.withFeature(UFeature)
                 }
 
                 override val determinant by lazy { gsl_linalg_LU_det(lups.first.nativeHandle, lups.third) }
@@ -224,7 +222,7 @@ public class GslDoubleLinearSpace(scope: AutofreeScope) :
                 override val r: Matrix<Double> get() = qr.second
             }
 
-            else -> super.getFeature(structure, type)
+            else -> super.computeFeature(structure, type)
         }?.let(type::cast)
 }
 
@@ -299,10 +297,9 @@ public fun <R> GslFloatLinearSpace(block: GslFloatLinearSpace.() -> R): R =
 /**
  * Represents [Complex] matrix context implementing where all the operations are delegated to GSL.
  */
-@Suppress("OVERRIDE_BY_INLINE")
 public class GslComplexLinearSpace(scope: AutofreeScope) :
     GslLinearSpace<Complex, ComplexField, gsl_matrix_complex, gsl_vector_complex>(scope) {
-    override inline val elementAlgebra: ComplexField
+    override val elementAlgebra: ComplexField
         get() = ComplexField
 
     override fun produceDirtyMatrix(rows: Int, columns: Int): GslMatrix<Complex, gsl_matrix_complex> = GslComplexMatrix(
@@ -353,9 +350,8 @@ public class GslComplexLinearSpace(scope: AutofreeScope) :
     }
 
     @OptIn(PerformancePitfall::class)
-    @Suppress("IMPLICIT_CAST_TO_ANY")
     @UnstableKMathAPI
-    override fun <F : StructureFeature> getFeature(structure: Matrix<Complex>, type: KClass<out F>): F? =
+    override fun <F : StructureFeature> computeFeature(structure: Matrix<Complex>, type: KClass<out F>): F? =
         when (type) {
             LupDecompositionFeature::class, DeterminantFeature::class -> object : LupDecompositionFeature<Complex>,
                 DeterminantFeature<Complex>, InverseMatrixFeature<Complex> {
@@ -396,14 +392,14 @@ public class GslComplexLinearSpace(scope: AutofreeScope) :
                             j == i -> 1.0.toComplex()
                             else -> 0.0.toComplex()
                         }
-                    } + LFeature
+                    }.withFeature(LFeature)
                 }
 
                 override val u by lazy {
                     VirtualMatrix(
                         lups.first.shape[0],
                         lups.first.shape[1],
-                    ) { i, j -> if (j >= i) lups.first[i, j] else 0.0.toComplex() } + UFeature
+                    ) { i, j -> if (j >= i) lups.first[i, j] else 0.0.toComplex() }.withFeature(UFeature)
                 }
 
                 override val determinant by lazy {
@@ -425,7 +421,7 @@ public class GslComplexLinearSpace(scope: AutofreeScope) :
                 }
             }
 
-            else -> super.getFeature(structure, type)
+            else -> super.computeFeature(structure, type)
         }?.let(type::cast)
 }
 

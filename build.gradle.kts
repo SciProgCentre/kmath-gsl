@@ -1,27 +1,28 @@
 import de.undercouch.gradle.tasks.download.Download
-import org.jetbrains.dokka.gradle.DokkaTask
+import org.jetbrains.dokka.Platform
+import org.jetbrains.dokka.gradle.*
 import org.jetbrains.kotlin.gradle.tasks.AbstractKotlinNativeCompile
 import org.jetbrains.kotlin.gradle.tasks.CInteropProcess
-import ru.mipt.npm.gradle.Maturity
 import org.jetbrains.kotlin.konan.target.HostManager
 import space.kscience.kmath.gsl.codegen.matricesCodegen
 import space.kscience.kmath.gsl.codegen.vectorsCodegen
 import java.net.URL
+import space.kscience.gradle.*
 
 plugins {
     `maven-publish`
     alias(libs.plugins.download)
-    alias(miptNpm.plugins.gradle.project)
-    alias(miptNpm.plugins.kotlin.multiplatform)
+    alias(kscienceLibs.plugins.gradle.project)
+    alias(kscienceLibs.plugins.kotlin.multiplatform)
+    id("org.jetbrains.dokka") version "1.7.20"
 }
 
 group = "space.kscience"
-version = "0.3.0-dev-4"
+version = "0.3.0-dev-5"
 
 repositories {
     mavenCentral()
     maven("https://repo.kotlin.link")
-    maven("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/dev")
 }
 
 kotlin {
@@ -29,7 +30,10 @@ kotlin {
 
     data class DownloadLinks(val gsl: String?)
 
-    val nativeTargets = setOf(linuxX64(), mingwX64())
+    val nativeTargets = setOf(
+        linuxX64(),
+        mingwX64(),
+    )
 
     val downloadLinks = when (HostManager.hostOs()) {
         "linux" -> DownloadLinks(
@@ -109,7 +113,7 @@ kotlin {
 
         commonMain {
             dependencies {
-                api("space.kscience:kmath-complex:0.3.0-dev-12")
+                api("space.kscience:kmath-complex:0.3.1-dev-5")
             }
         }
 
@@ -124,14 +128,22 @@ kotlin {
         }
 
         val nativeTest by creating {
+            dependsOn(nativeMain)
             dependsOn(commonTest.get())
         }
 
         configure(nativeTargets) {
             val main by compilations.getting
             val test by compilations.getting
-            main.defaultSourceSet.dependsOn(nativeMain)
-            test.defaultSourceSet.dependsOn(nativeTest)
+
+            configure(main.kotlinSourceSets) {
+                dependsOn(nativeMain)
+            }
+
+            configure(test.kotlinSourceSets) {
+                dependsOn(nativeTest)
+            }
+
             val libgsl by main.cinterops.creating
             tasks[libgsl.interopProcessingTaskName].dependsOn(writeDefFile)
         }
@@ -139,7 +151,7 @@ kotlin {
 
     targets.all {
         compilations.all {
-            kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+            kotlinOptions.freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
         }
     }
 }
@@ -151,7 +163,7 @@ tasks {
         }
     }
 
-    withType<AbstractKotlinNativeCompile<*, *>> {
+    withType<AbstractKotlinNativeCompile<*, *, *>> {
         onlyIf {
             compilation.konanTarget == HostManager.host
         }
@@ -171,43 +183,55 @@ readme {
 }
 
 ksciencePublish {
-    github(rootProject.name, publish = false)
-    space(release = true)
+    pom("https://github.com/SciProgCentre/${rootProject.name}") {
+        useApache2Licence()
+        useSPCTeam()
+    }
+
+    github(rootProject.name, "SciProgCentre", addToRelease = false)
+
+    space(
+        if (isInDevelopment) {
+            "https://maven.pkg.jetbrains.space/spc/p/sci/dev"
+        } else {
+            "https://maven.pkg.jetbrains.space/spc/p/sci/maven"
+        },
+    )
 }
 
 apiValidation.nonPublicMarkers.add("space.kscience.kmath.misc.UnstableKMathAPI")
 
-afterEvaluate {
-    tasks.withType<DokkaTask> {
-        println(dokkaSourceSets.toList())
-        dokkaSourceSets.all {
-            val readmeFile = projectDir.resolve("README.md")
-            if (readmeFile.exists()) includes.from(readmeFile)
-            val kotlinDirPath = "src/$name/kotlin"
-            val kotlinDir = file(kotlinDirPath)
+tasks.withType<DokkaTask> {
+    dokkaSourceSets.register("nativeMain") {
+        displayName.set("Native")
+        platform.set(Platform.native)
+        sourceRoots.from(kotlin.sourceSets.getByName("nativeMain").kotlin.srcDirs)
+        val readmeFile = projectDir.resolve("README.md")
+        if (readmeFile.exists()) includes.from(readmeFile)
+        val kotlinDirPath = "src/$name/kotlin"
+        val kotlinDir = file(kotlinDirPath)
 
-            if (kotlinDir.exists()) sourceLink {
-                localDirectory.set(kotlinDir)
+        if (kotlinDir.exists()) sourceLink {
+            localDirectory.set(kotlinDir)
 
-                remoteUrl.set(
-                    URL("https://github.com/mipt-npm/${rootProject.name}/tree/master/$kotlinDirPath")
-                )
-            }
-
-            externalDocumentationLink(
-                "https://mipt-npm.github.io/kmath/kmath-core/",
-                "https://mipt-npm.github.io/kmath/kmath-core/kmath-core/package-list",
-            )
-
-            externalDocumentationLink(
-                "https://mipt-npm.github.io/kmath/kmath-memory/",
-                "https://mipt-npm.github.io/kmath/kmath-memory/kmath-memory/package-list",
-            )
-
-            externalDocumentationLink(
-                "https://mipt-npm.github.io/kmath/kmath-complex/",
-                "https://mipt-npm.github.io/kmath/kmath-complex/kmath-complex/package-list",
+            remoteUrl.set(
+                URL("https://github.com/SciProgCentre/${rootProject.name}/tree/master/$kotlinDirPath")
             )
         }
+
+        externalDocumentationLink(
+            "https://sciprogcentre.github.io/kmath/kmath-core/",
+            "https://sciprogcentre.github.io/kmath/package-list",
+        )
+
+        externalDocumentationLink(
+            "https://sciprogcentre.github.io/kmath/kmath-memory/",
+            "https://sciprogcentre.github.io/kmath/package-list",
+        )
+
+        externalDocumentationLink(
+            "https://sciprogcentre.github.io/kmath/kmath-complex/",
+            "https://sciprogcentre.github.io/kmath/package-list",
+        )
     }
 }

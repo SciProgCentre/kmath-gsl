@@ -1,12 +1,12 @@
 /*
- * Copyright 2021 KMath contributors.
+ * Copyright 2021-2022 KMath contributors.
  * Use of this source code is governed by the GNU GPL v3 license that can be found in the license/LICENSE.txt file.
  */
 
 package space.kscience.kmath.gsl
 
 import space.kscience.kmath.misc.PerformancePitfall
-import space.kscience.kmath.structures.toList
+import space.kscience.kmath.operations.toList
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

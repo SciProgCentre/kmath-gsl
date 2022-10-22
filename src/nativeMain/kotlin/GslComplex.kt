@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 KMath contributors.
+ * Copyright 2021-2022 KMath contributors.
  * Use of this source code is governed by the GNU GPL v3 license that can be found in the license/LICENSE.txt file.
  */
 

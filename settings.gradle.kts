@@ -1,5 +1,3 @@
-enableFeaturePreview("VERSION_CATALOGS")
-
 pluginManagement.repositories {
     maven("https://repo.kotlin.link")
     mavenCentral()
@@ -15,8 +13,8 @@ dependencyResolutionManagement {
         gradlePluginPortal()
     }
 
-    versionCatalogs.create("miptNpm") {
-        from("ru.mipt.npm:version-catalog:0.10.7")
+    versionCatalogs.create("kscienceLibs") {
+        from("space.kscience:version-catalog:0.13.1-kotlin-1.7.20")
     }
 }
 

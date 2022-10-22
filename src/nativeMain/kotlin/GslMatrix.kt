@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 KMath contributors.
+ * Copyright 2021-2022 KMath contributors.
  * Use of this source code is governed by the GNU GPL v3 license that can be found in the license/LICENSE.txt file.
  */
 
@@ -8,8 +8,7 @@ package space.kscience.kmath.gsl
 import kotlinx.cinterop.AutofreeScope
 import kotlinx.cinterop.CStructVar
 import space.kscience.kmath.linear.Matrix
-import space.kscience.kmath.misc.PerformancePitfall
-import space.kscience.kmath.structures.asSequence
+import space.kscience.kmath.nd.StructureND
 
 /**
  * Wraps gsl_matrix_* objects from GSL.
@@ -19,12 +18,5 @@ public abstract class GslMatrix<T : Any, H : CStructVar> internal constructor(sc
     internal abstract operator fun set(i: Int, j: Int, value: T)
     internal abstract fun copy(): GslMatrix<T, H>
 
-    @OptIn(PerformancePitfall::class)
-    override fun toString(): String = if (rowNum <= 5 && colNum <= 5)
-        "Matrix(rowsNum = $rowNum, colNum = $colNum)\n" +
-                rows.joinToString(prefix = "(", postfix = ")", separator = "\n ") { buffer ->
-                    buffer.asSequence().joinToString(separator = "\t") { it.toString() }
-                }
-    else
-        "Matrix(rowsNum = $rowNum, colNum = $colNum)"
+    override fun toString(): String = StructureND.toString(this)
 }
