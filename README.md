@@ -1,9 +1,9 @@
 # Module kmath-gsl
 
-[![Gradle build](https://github.com/SciProgCenter/kmath-gsl/workflows/build/badge.svg)](https://github.com/SciProgCenter/kmath-gsl/actions/workflows/build.yml)
+[![Gradle build](https://github.com/SciProgCentre/kmath-gsl/workflows/build/badge.svg)](https://github.com/SciProgCentre/kmath-gsl/actions/workflows/build.yml)
 [![Space](https://img.shields.io/badge/dynamic/xml?color=orange&label=Space&query=//metadata/versioning/latest&url=https%3A%2F%2Fmaven.pkg.jetbrains.space%2Fspc%2Fp%2Fsci%2Fmaven%2Fspace%2Fkscience%2Fkmath-gsl%2Fmaven-metadata.xml)](https://maven.pkg.jetbrains.space/spc/p/sci/maven/space/kscience/)
 
-[KMath](https://github.com/SciProgCenter/kmath) extension adding GNU Scientific Library based linear algebra implementation.
+[KMath](https://github.com/SciProgCentre/kmath) extension adding GNU Scientific Library based linear algebra implementation.
 
 [Documentation site](https://sciprogcenter.github.io/kmath-gsl/)
 
@@ -52,5 +52,5 @@ pacman --noconfirm -S mingw-w64-x86_64-gsl
 
 ## Multiplatform support
 
-Currently, only `linuxX64` and `mingwX64` Kotlin targets are supported. It is also planned to support `macosX64`,
-and `jvm` (with [JEP-389](https://openjdk.java.net/jeps/389)).
+Currently, only `linuxX64` and `mingwX64` Kotlin targets are supported. It is also planned to support `macosX64`, `macosArm64`,
+and even `jvm` (only after stable JDK release including [JEP-389](https://openjdk.java.net/jeps/389)).
